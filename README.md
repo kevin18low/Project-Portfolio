@@ -23,7 +23,7 @@ game and also make some customizations to make it more interesting.
 
 **User stories**
 
-- As a user, I want to be able to create a new player profile so I can track my own high scores
+- As a user, I want to be able to create a new player profile and add it to a list of all players
 - As a user, I want to be able to see a high score list across all players
 - As a user, I want to be able to pause the game so I can take a break and come back later
 - As a user, I want to customize my snake's colour scheme
