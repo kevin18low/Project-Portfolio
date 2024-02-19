@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents a player of the snake game> Each player has a player name and a list of their high scores
+// Represents a player of the snake game. Each player has a player name and a list of their high scores
 
 public class Player {
     private String name;

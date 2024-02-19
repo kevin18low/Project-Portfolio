@@ -2,14 +2,13 @@ package ui;
 
 import model.Game;
 import model.Player;
+import model.PlayerBase;
 import model.Snake;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static java.awt.Color.getColor;
@@ -20,15 +19,13 @@ public class SnakeApp extends JFrame implements KeyListener {
 
     private Snake snake;
     private Game snakeGame;
-    private List<Player> players = new ArrayList<>();
 
     public SnakeApp() {
         runSnake();
     }
 
-    //Player p1 = new Player("p1");
-    //Player p2 = new Player("p2");
     Scanner input = new Scanner(System.in);
+    PlayerBase pb = new PlayerBase();
 
     public void runSnake() {
         setup();
@@ -50,8 +47,9 @@ public class SnakeApp extends JFrame implements KeyListener {
         System.out.println("Welcome to Snake!");
         System.out.println("Enter your player name: ");
         String playerName = input.nextLine();
-        players.add(getPlayerProfile(playerName));
-        displayProfile(getPlayerProfile(playerName));
+        //players.add(getPlayerProfile(playerName));
+        //displayProfile(getPlayerProfile(playerName));
+        displayProfile(pb.getPlayerProfile(playerName));
     }
 
     // EFFECTS: gets snake colour and board dimensions, then sets up game
@@ -70,17 +68,6 @@ public class SnakeApp extends JFrame implements KeyListener {
         snake = new Snake(1, 0, 0, color);
         System.out.println("Starting game with " + width + " x " + height + " board!");
         snakeGame = new Game(0, 0);
-    }
-
-    //EFFECTS: returns player if player with given name already exists
-    //         returns new player if name is not in list of players
-    public Player getPlayerProfile(String name) {
-        for (Player p : players) {
-            if (p.getName().equals(name)) {
-                return p;
-            }
-        }
-        return new Player(name);
     }
 
     // EFFECTS: prints out player name and their past high scores
