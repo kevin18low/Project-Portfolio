@@ -91,6 +91,7 @@ public class SnakeTest {
         assertEquals(s1.keyDirection(KeyEvent.VK_UP), 2);
         assertEquals(s1.keyDirection(KeyEvent.VK_DOWN), -2);
         assertEquals(s1.keyDirection(KeyEvent.VK_Z), 1);
+
         assertEquals(s2.keyDirection(KeyEvent.VK_RIGHT), 1);
         assertEquals(s2.keyDirection(KeyEvent.VK_LEFT), -1);
         assertEquals(s2.keyDirection(KeyEvent.VK_UP), 2);
