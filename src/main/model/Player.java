@@ -31,8 +31,4 @@ public class Player {
         return scores;
     }
 
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
-    }
-
 }

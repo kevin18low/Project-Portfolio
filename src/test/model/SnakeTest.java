@@ -99,4 +99,92 @@ public class SnakeTest {
         assertFalse(s2.ateFood(f2));
         assertFalse(s2.ateFood(f3));
     }
+
+    @Test
+    public void setDirectionTest() {
+        assertEquals(s1.getDirection(), 1);
+        assertEquals(s2.getDirection(), -2);
+        s1.setDirection(2);
+        s2.setDirection(1);
+        assertEquals(s1.getDirection(), 2);
+        assertEquals(s2.getDirection(), 1);
+    }
+
+    @Test
+    public void getDirectionTest() {
+        assertEquals(s1.getDirection(), 1);
+        assertEquals(s2.getDirection(), -2);
+    }
+
+    @Test
+    public void setSnakeXTest() {
+        assertEquals(s1.getSnakeX(), 50);
+        assertEquals(s2.getSnakeX(), 15);
+        s1.setSnakeX(30);
+        s2.setSnakeX(2);
+        assertEquals(s1.getSnakeX(), 30);
+        assertEquals(s2.getSnakeX(), 2);
+    }
+
+    @Test
+    public void getSnakeXTest() {
+        assertEquals(s1.getSnakeX(), 50);
+        assertEquals(s2.getSnakeX(), 15);
+    }
+
+    @Test
+    public void setSnakeYTest() {
+        assertEquals(s1.getSnakeY(), 50);
+        assertEquals(s2.getSnakeY(), 70);
+        s1.setSnakeY(30);
+        s2.setSnakeY(2);
+        assertEquals(s1.getSnakeY(), 30);
+        assertEquals(s2.getSnakeY(), 2);
+    }
+
+    @Test
+    public void getSnakeYTest() {
+        assertEquals(s1.getSnakeY(), 50);
+        assertEquals(s2.getSnakeY(), 70);
+    }
+
+    @Test
+    public void setSnakeLengthTest() {
+        assertEquals(s1.getSnakeLength(),1);
+        assertEquals(s2.getSnakeLength(),1);
+        s1.setSnakeLength(3);
+        s2.setSnakeLength(8);
+        assertEquals(s1.getSnakeLength(),3);
+        assertEquals(s2.getSnakeLength(),8);
+    }
+
+    @Test
+    public void getSnakeLengthTest() {
+        assertEquals(s1.getSnakeLength(),1);
+        assertEquals(s2.getSnakeLength(),1);
+        s1.setSnakeLength(3);
+        s2.setSnakeLength(8);
+        assertEquals(s1.getSnakeLength(),3);
+        assertEquals(s2.getSnakeLength(),8);
+    }
+
+    @Test
+    public void setColorTest() {
+        assertEquals(s1.getColor(), Color.green);
+        assertEquals(s2.getColor(), Color.blue);
+        s1.setColor(Color.red);
+        s2.setColor(Color.pink);
+        assertEquals(s1.getColor(), Color.red);
+        assertEquals(s2.getColor(), Color.pink);
+    }
+
+    @Test
+    public void getColorTest() {
+        assertEquals(s1.getColor(), Color.green);
+        assertEquals(s2.getColor(), Color.blue);
+        s1.setColor(Color.red);
+        s2.setColor(Color.pink);
+        assertEquals(s1.getColor(), Color.red);
+        assertEquals(s2.getColor(), Color.pink);
+    }
 }

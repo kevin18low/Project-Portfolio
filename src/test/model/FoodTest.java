@@ -26,4 +26,24 @@ public class FoodTest {
         assertFalse(s1.ateFood(f2));
         assertFalse(f2.getEaten());
     }
+
+    @Test
+    public void setFoodXTest() {
+        assertEquals(f1.getFoodX(), 50);
+        f1.setFoodX(30);
+        assertEquals(f1.getFoodX(), 30);
+        assertEquals(f2.getFoodX(), 15);
+        f2.setFoodX(45);
+        assertEquals(f2.getFoodX(), 45);
+    }
+
+    @Test
+    public void setFoodYTest() {
+        assertEquals(f1.getFoodY(), 50);
+        f1.setFoodY(30);
+        assertEquals(f1.getFoodY(), 30);
+        assertEquals(f2.getFoodY(), 45);
+        f2.setFoodY(10);
+        assertEquals(f2.getFoodY(), 10);
+    }
 }
