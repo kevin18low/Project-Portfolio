@@ -9,6 +9,7 @@ public class Player {
     private String name;
     private List<Integer> scores;
 
+    // Create a player  object with given name and scores
     public Player(String name) {
         this.name = name;
         this.scores = new ArrayList<>();
@@ -18,6 +19,8 @@ public class Player {
     public void addScore(int score) {
         scores.add(score);
     }
+
+    //*************** getters and setters **************
 
     public String getName() {
         return name;

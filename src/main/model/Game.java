@@ -13,6 +13,7 @@ public class Game {
     private boolean paused;
     private boolean gameOver;
 
+    // Create a game with given width and height. Starts unpaused
     public Game(int width, int height) {
         this.boardWidth = width;
         this.boardHeight = height;
@@ -27,6 +28,8 @@ public class Game {
             setPaused(true);
         }
     }
+
+    //*************** getters and setters **************
 
     public int getBoardWidth() {
         return boardWidth;

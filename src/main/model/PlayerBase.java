@@ -8,6 +8,7 @@ import java.util.List;
 public class PlayerBase {
     private List<Player> players;
 
+    // Make a PlayerBase with an empty list of players
     public PlayerBase() {
         players = new ArrayList<>();
     }
@@ -35,6 +36,8 @@ public class PlayerBase {
         addNewPlayer(name);
         return players.get(players.size() - 1);
     }
+
+    //*************** getters and setters **************
 
     public List<Player> getPlayers() {
         return players;
