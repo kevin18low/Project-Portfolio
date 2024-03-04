@@ -36,8 +36,21 @@ public class SnakeAppLanterna {
 
     // EFFECTS: runs program
     public void run() throws IOException {
+        // add test player to avoid null pointer exception
+        pb.addPlayer(new Player("kevin"));
         setup();
+        screenDisplay();
 
+    }
+
+    // EFFECTS: set up the game by initializing the board, snake, and player
+    public void setup() {
+        initPlayer();
+        allPlayers();
+        initGame();
+    }
+
+    public void screenDisplay() throws IOException {
         screen = new DefaultTerminalFactory().createScreen();
         TextGraphics tg = screen.newTextGraphics();
         screen.startScreen();
@@ -63,20 +76,18 @@ public class SnakeAppLanterna {
         screen.stopScreen();
     }
 
-    // EFFECTS: set up the game by initializing the board, snake, and player
-    public void setup() {
-        initPlayer();
-        initGame();
-    }
-
     // EFFECTS: gets player name and displays player profile
     private void initPlayer() {
         System.out.println("Welcome to Snake!");
-        System.out.println("Enter your player name: ");
-        String playerName = input.nextLine();
-        //players.add(getPlayerProfile(playerName));
-        //displayProfile(getPlayerProfile(playerName));
-        displayProfile(pb.getPlayerProfile(playerName));
+        System.out.println("Are you a returning player?");
+        String returning = input.nextLine();
+        System.out.println("Enter your name: ");
+        String name = input.nextLine();
+        if (returning.equalsIgnoreCase("yes")) {
+            displayExistingProfile(pb.getPlayerProfile(name));
+        } else if (returning.equalsIgnoreCase("no")) {
+            displayNewProfile(pb.newPlayerProfile(name));
+        }
     }
 
     // EFFECTS: gets snake colour and board dimensions, then sets up game
@@ -99,11 +110,23 @@ public class SnakeAppLanterna {
     }
 
     // EFFECTS: prints out player name and their past high scores
-    public void displayProfile(Player p) {
+    public void displayExistingProfile(Player p) {
         System.out.println("Welcome back " + p.getName() + "!");
         System.out.println("Here are your high scores: ");
         for (int s : p.getScores()) {
             System.out.println(s);
+        }
+    }
+
+    public void displayNewProfile(Player p) {
+        System.out.println("Welcome " + p.getName() + "!");
+        System.out.println("Play some games to add to your high score list! ");
+    }
+
+    public void allPlayers() {
+        System.out.println("Here are all the players in the database:");
+        for (Player p : pb.getPlayers()) {
+            System.out.println(p.getName());
         }
     }
 }

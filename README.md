@@ -23,9 +23,14 @@ game and also make some customizations to make it more interesting.
 
 **User stories**
 
+**Phase 1**
 - As a user, I want to be able to create a new player profile and add it to a list of all players
 - As a user, I want to be able to see a list of my high scores
 - As a user, I want to be able to pause the game so I can take a break and come back later
 - As a user, I want to customize my snake's colour scheme
 - As a user, I want to choose the size of the board to play on
+
+**Phase 2**
+- As a user, I want to be able to save my player profile in the PlayerBase
+- As a user, I want to be able to reload my player profile with all my past scores saved
   

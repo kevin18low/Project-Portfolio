@@ -21,8 +21,9 @@ public class PlayerBase {
 
     //MODIFIES: this
     //EFFECTS: adds a new player with given name to the list of existing players
-    public void addNewPlayer(String name) {
+    public Player newPlayerProfile(String name) {
         players.add(new Player(name));
+        return players.get(players.size() - 1);
     }
 
     //EFFECTS: returns player if player with given name already exists
@@ -33,8 +34,8 @@ public class PlayerBase {
                 return p;
             }
         }
-        addNewPlayer(name);
-        return players.get(players.size() - 1);
+        // should not be reached
+        return null;
     }
 
     //*************** getters and setters **************

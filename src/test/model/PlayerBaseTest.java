@@ -25,10 +25,10 @@ public class PlayerBaseTest {
         assertEquals(pb.getPlayers().size(), 2);
     }
     @Test
-    public void addNewPlayerTest() {
+    public void newPlayerProfileTest() {
         pb.addPlayer(p1);
         assertEquals(pb.getPlayers().size(), 1);
-        pb.addNewPlayer("new player");
+        pb.newPlayerProfile("new player");
         pb.addPlayer(p2);
         assertEquals(pb.getPlayers().size(), 3);
     }
@@ -41,8 +41,8 @@ public class PlayerBaseTest {
         assertEquals(pb.getPlayerProfile("p1"), p1);
         assertEquals(pb.getPlayerProfile("p2"), p2);
         assertEquals(pb.getPlayers().size(), 2);
-        pb.getPlayerProfile("p3");
-        assertEquals(pb.getPlayers().size(), 3);
+        assertNull(pb.getPlayerProfile("p3"));
+        assertEquals(pb.getPlayers().size(), 2);
     }
 
 }
