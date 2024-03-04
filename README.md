@@ -33,4 +33,6 @@ game and also make some customizations to make it more interesting.
 **Phase 2**
 - As a user, I want to be able to save my player profile in the PlayerBase
 - As a user, I want to be able to reload my player profile with all my past scores saved
+
+**Citations**
   

@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents all players that have played the game
 
-public class PlayerBase {
+public class PlayerBase implements Writable {
     private List<Player> players;
 
     // Make a PlayerBase with an empty list of players
@@ -19,13 +23,6 @@ public class PlayerBase {
         players.add(p);
     }
 
-    //MODIFIES: this
-    //EFFECTS: adds a new player with given name to the list of existing players
-    public Player newPlayerProfile(String name) {
-        players.add(new Player(name));
-        return players.get(players.size() - 1);
-    }
-
     //EFFECTS: returns player if player with given name already exists
     //         returns new player if name is not in list of players
     public Player getPlayerProfile(String name) {
@@ -36,6 +33,25 @@ public class PlayerBase {
         }
         // should not be reached
         return null;
+    }
+
+    // EFFECTS: put in JSON
+    // Credit: JSonSerializationDemo
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Players", playersToJson());
+        return json;
+    }
+
+    // EFFECTS: returns items as a JSON array
+    // Credit: JSonSerializationDemo
+    public JSONArray playersToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Player p : players) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 
     //*************** getters and setters **************
