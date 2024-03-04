@@ -19,6 +19,8 @@ public class GameTest {
     @Test
     public void pauseGameTest() {
         assertFalse(g1.isPaused());
+        g1.pauseGame(new KeyStroke(KeyType.ArrowRight));
+        assertFalse(g1.isPaused());
         g1.pauseGame(ks);
         assertTrue(g1.isPaused());
     }
