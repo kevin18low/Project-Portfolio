@@ -1,10 +1,11 @@
 package model;
 
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,88 +15,98 @@ public class SnakeTest {
     private Food f1;
     private Food f2;
     private Food f3;
+    private KeyStroke right;
+    private KeyStroke left;
+    private KeyStroke up;
+    private KeyStroke down;
+    private KeyStroke badInput;
 
     @BeforeEach
     public void setup() {
-        s1 = new Snake(1, 50, 50, Color.green);
-        s2 = new Snake(-2, 15, 70, Color.blue);
+        s1 = new Snake(new Direction(1), 50, 50, Color.green);
+        s2 = new Snake(new Direction(-2), 15, 70, Color.blue);
         f1 = new Food(50, 50);
         f2 = new Food(15, 45);
         f3 = new Food(95, 70);
+        right = new KeyStroke(KeyType.ArrowRight);
+        left = new KeyStroke(KeyType.ArrowLeft);
+        up = new KeyStroke(KeyType.ArrowUp);
+        down = new KeyStroke(KeyType.ArrowDown);
+        badInput = new KeyStroke(KeyType.Tab);
     }
 
     @Test
     public void turnTestSameDirection() {
         assertEquals(s1.getDirection(), 1);
-        s1.turn(KeyEvent.VK_RIGHT);
+        s1.turn(right);
         assertEquals(s1.getDirection(), 1);
         assertEquals(s2.getDirection(), -2);
-        s2.turn(KeyEvent.VK_DOWN);
+        s2.turn(down);
         assertEquals(s2.getDirection(), -2);
     }
 
     @Test
     public void turnTestOppositeDirection() {
         assertEquals(s1.getDirection(), 1);
-        s1.turn(KeyEvent.VK_LEFT);
+        s1.turn(left);
         assertEquals(s1.getDirection(), 1);
         assertEquals(s2.getDirection(), -2);
-        s2.turn(KeyEvent.VK_UP);
+        s2.turn(up);
         assertEquals(s2.getDirection(), -2);
     }
 
     @Test
     public void turnTestValidTurn() {
         assertEquals(s1.getDirection(), 1);
-        s1.turn(KeyEvent.VK_UP);
+        s1.turn(up);
         assertEquals(s1.getDirection(), 2);
-        s1.turn(KeyEvent.VK_LEFT);
+        s1.turn(left);
         assertEquals(s1.getDirection(), -1);
         assertEquals(s2.getDirection(), -2);
-        s2.turn(KeyEvent.VK_RIGHT);
+        s2.turn(right);
         assertEquals(s2.getDirection(), 1);
-        s2.turn(KeyEvent.VK_DOWN);
+        s2.turn(down);
         assertEquals(s2.getDirection(), -2);
     }
 
     @Test
     public void validTurnTestInvalidTurns() {
-        assertFalse(s1.validTurn(KeyEvent.VK_RIGHT));
-        assertFalse(s1.validTurn(KeyEvent.VK_LEFT));
-        s1.turn(KeyEvent.VK_DOWN);
-        assertFalse(s1.validTurn(KeyEvent.VK_UP));
+        assertFalse(s1.validTurn(right));
+        assertFalse(s1.validTurn(left));
+        s1.turn(down);
+        assertFalse(s1.validTurn(up));
 
-        assertFalse(s2.validTurn(KeyEvent.VK_UP));
-        assertFalse(s2.validTurn(KeyEvent.VK_DOWN));
-        s2.turn(KeyEvent.VK_LEFT);
-        assertFalse(s2.validTurn(KeyEvent.VK_RIGHT));
+        assertFalse(s2.validTurn(up));
+        assertFalse(s2.validTurn(down));
+        s2.turn(left);
+        assertFalse(s2.validTurn(right));
     }
 
     @Test
     public void validTurnTestValidTurns() {
-        assertTrue(s1.validTurn(KeyEvent.VK_UP));
-        assertTrue(s1.validTurn(KeyEvent.VK_DOWN));
-        s1.turn(KeyEvent.VK_DOWN);
-        assertTrue(s1.validTurn(KeyEvent.VK_RIGHT));
+        assertTrue(s1.validTurn(up));
+        assertTrue(s1.validTurn(down));
+        s1.turn(down);
+        assertTrue(s1.validTurn(right));
 
-        assertTrue(s2.validTurn(KeyEvent.VK_RIGHT));
-        assertTrue(s2.validTurn(KeyEvent.VK_LEFT));
-        s2.turn(KeyEvent.VK_RIGHT);
-        assertTrue(s2.validTurn(KeyEvent.VK_DOWN));
+        assertTrue(s2.validTurn(right));
+        assertTrue(s2.validTurn(left));
+        s2.turn(right);
+        assertTrue(s2.validTurn(down));
     }
 
     @Test
     public void keyDirectionTest() {
-        assertEquals(s1.keyDirection(KeyEvent.VK_RIGHT), 1);
-        assertEquals(s1.keyDirection(KeyEvent.VK_LEFT), -1);
-        assertEquals(s1.keyDirection(KeyEvent.VK_UP), 2);
-        assertEquals(s1.keyDirection(KeyEvent.VK_DOWN), -2);
-        assertEquals(s1.keyDirection(KeyEvent.VK_Z), 1);
-        assertEquals(s2.keyDirection(KeyEvent.VK_RIGHT), 1);
-        assertEquals(s2.keyDirection(KeyEvent.VK_LEFT), -1);
-        assertEquals(s2.keyDirection(KeyEvent.VK_UP), 2);
-        assertEquals(s2.keyDirection(KeyEvent.VK_DOWN), -2);
-        assertEquals(s2.keyDirection(KeyEvent.VK_K), -2);
+        assertEquals(s1.keyDirection(right), 1);
+        assertEquals(s1.keyDirection(left), -1);
+        assertEquals(s1.keyDirection(up), 2);
+        assertEquals(s1.keyDirection(down), -2);
+        assertEquals(s1.keyDirection(badInput), 1);
+        assertEquals(s2.keyDirection(right), 1);
+        assertEquals(s2.keyDirection(left), -1);
+        assertEquals(s2.keyDirection(up), 2);
+        assertEquals(s2.keyDirection(down), -2);
+        assertEquals(s2.keyDirection(badInput), -2);
     }
 
     @Test
@@ -104,16 +115,6 @@ public class SnakeTest {
         assertFalse(s1.ateFood(f2));
         assertFalse(s2.ateFood(f2));
         assertFalse(s2.ateFood(f3));
-    }
-
-    @Test
-    public void setDirectionTest() {
-        assertEquals(s1.getDirection(), 1);
-        assertEquals(s2.getDirection(), -2);
-        s1.setDirection(2);
-        s2.setDirection(1);
-        assertEquals(s1.getDirection(), 2);
-        assertEquals(s2.getDirection(), 1);
     }
 
     @Test

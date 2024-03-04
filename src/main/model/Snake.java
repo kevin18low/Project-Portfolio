@@ -1,20 +1,22 @@
 package model;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
+
+import com.googlecode.lanterna.input.KeyStroke;
 
 import static java.lang.Math.abs;
 
 // Represents a snake with a current direction, length, x position, y position, and color
 
 public class Snake {
-    private int direction; // -1,1 for left and right, -2,2 for down and up
+    private Direction direction;
     private int snakeLength;
     private int snakeX;
     private int snakeY;
     private Color color;
 
-    public Snake(int direction, int x, int y, Color c) {
+    // Make a snake object going in given direction at position (x, y) with colour c
+    public Snake(Direction direction, int x, int y, Color c) {
         this.direction = direction;
         this.snakeLength = 1;
         this.snakeX = x;
@@ -23,32 +25,35 @@ public class Snake {
     }
 
     // MODIFIES: this
-    // EFFECTS: changes direction based on a key input. If not a possible turn, nothing changes
-    public void turn(int key) {
-        if (validTurn(key)) {
-            direction = keyDirection(key);
+    // EFFECTS: change direction according to key pressed
+    //          if not a possible turn, nothing happens
+    public void turn(KeyStroke ks) {
+        if (validTurn(ks)) {
+            direction.setDirection(keyDirection(ks));
         }
     }
 
     //EFFECTS: returns true if the turn is possible based on te current direction
-    public boolean validTurn(int key) {
-        return !(abs(keyDirection(key)) == abs(direction));
+    public boolean validTurn(KeyStroke ks) {
+        return !(abs(keyDirection(ks)) == abs(direction.getDirection()));
     }
 
-    //EFFECTS: returns direction number corresponding to different arrow key inputs
-    public int keyDirection(int key) {
-        if (key == KeyEvent.VK_UP) {
-            return 2;
-        } else if (key == KeyEvent.VK_DOWN) {
-            return -2;
-        } else if (key == KeyEvent.VK_LEFT) {
-            return -1;
-        } else if (key == KeyEvent.VK_RIGHT) {
-            return 1;
-        } else {
-            return this.direction;
+    // EFFECTS: return direction according to inputted key
+    public int keyDirection(KeyStroke ks) {
+        switch (ks.getKeyType()) {
+            case ArrowUp:
+                return 2;
+            case ArrowDown:
+                return -2;
+            case ArrowRight:
+                return 1;
+            case ArrowLeft:
+                return -1;
+
         }
+        return direction.getDirection();
     }
+
 
     // MODIFIES: this, Food f
     // EFFECTS: returns true if snake has eaten food
@@ -62,8 +67,18 @@ public class Snake {
         return false;
     }
 
-    public void setDirection(int direction) {
-        this.direction = direction;
+    //*************** getters and setters **************
+
+    public int getDirection() {
+        return direction.getDirection();
+    }
+
+    public int getDx() {
+        return direction.getDx();
+    }
+
+    public int getDy() {
+        return direction.getDy();
     }
 
     public void setSnakeLength(int snakeLength) {
@@ -80,10 +95,6 @@ public class Snake {
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public int getDirection() {
-        return direction;
     }
 
     public int getSnakeLength() {

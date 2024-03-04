@@ -14,7 +14,7 @@ public class FoodTest {
 
     @BeforeEach
     public void setup() {
-        s1 = new Snake(1, 50, 50, Color.green);
+        s1 = new Snake(new Direction(1), 50, 50, Color.green);
         f1 = new Food(50, 50);
         f2 = new Food(15, 45);
     }
