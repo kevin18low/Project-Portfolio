@@ -32,7 +32,7 @@ public class SnakeTest {
         left = new KeyStroke(KeyType.ArrowLeft);
         up = new KeyStroke(KeyType.ArrowUp);
         down = new KeyStroke(KeyType.ArrowDown);
-        badInput = new KeyStroke(KeyType.Tab);
+        badInput = new KeyStroke(KeyType.Delete);
     }
 
     @Test
@@ -153,6 +153,18 @@ public class SnakeTest {
     public void getSnakeYTest() {
         assertEquals(s1.getSnakeY(), 50);
         assertEquals(s2.getSnakeY(), 70);
+    }
+
+    @Test
+    public void getDxTest() {
+        assertEquals(s1.getDx(), 1);
+        assertEquals(s2.getDx(), 0);
+    }
+
+    @Test
+    public void getDyTest() {
+        assertEquals(s1.getDy(), 0);
+        assertEquals(s2.getDy(), -1);
     }
 
     @Test

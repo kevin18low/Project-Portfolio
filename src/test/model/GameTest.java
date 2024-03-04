@@ -1,15 +1,26 @@
 package model;
 
+import com.googlecode.lanterna.input.KeyType;
+import com.googlecode.lanterna.input.KeyStroke;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
     private Game g1;
+    private KeyStroke ks;
 
     @BeforeEach
     public void setup() {
         g1 = new Game(8, 8);
+        ks = new KeyStroke(KeyType.Tab);
+    }
+
+    @Test
+    public void pauseGameTest() {
+        assertFalse(g1.isPaused());
+        g1.pauseGame(ks);
+        assertTrue(g1.isPaused());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package model;
 
-import java.awt.event.KeyEvent;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 
 // Represents the game board with a width and height, and boolean values indicating
 // whether the game has been paused or is over
@@ -21,8 +22,8 @@ public class Game {
 
     //MODIFIES: this
     //EFFECTS: changes paused to true when "p" is pressed
-    public void pauseGame(KeyEvent e) {
-        if (e.getKeyChar() == 112) {
+    public void pauseGame(KeyStroke ks) {
+        if (ks.getKeyType() == KeyType.Tab) {
             setPaused(true);
         }
     }
