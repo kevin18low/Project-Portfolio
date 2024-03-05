@@ -6,10 +6,8 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import model.Direction;
 import model.Game;
 import model.Player;
-import model.Snake;
 import model.PlayerBase;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -25,7 +23,6 @@ import static java.awt.Color.getColor;
 // Represents a SnakeApp that runs a game of snake
 
 public class SnakeAppLanterna {
-    private Snake snake;
     private Screen screen;
 
     private static final String JSON_STORE = "./data/playerbase.json";
@@ -33,13 +30,12 @@ public class SnakeAppLanterna {
     private JsonWriter jsonWriter;
     private Scanner input;
     private PlayerBase pb;
-    private Game game;
+    private Player player;
 
     // Runs a game of snake
     public SnakeAppLanterna() throws IOException {
         input = new Scanner(System.in);
         pb = new PlayerBase();
-        game = new Game(0, 0);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         run();
@@ -55,8 +51,8 @@ public class SnakeAppLanterna {
     // EFFECTS: set up the game by initializing the board, snake, and player
     public void setup() {
         System.out.println("Welcome to Snake!");
-        initPlayer();
-        initGame();
+        player = initPlayer();
+        player.setGame(initGame());
     }
 
     // EFFECTS: set up the screen and controls for the game
@@ -70,46 +66,42 @@ public class SnakeAppLanterna {
             if (keyStroke != null) {
                 System.out.println(keyStroke);
                 if (keyStroke.getKeyType() == KeyType.Escape) {
-                    System.out.println("Closing game");
+                    System.out.println("Saving and quitting...");
+                    savePlayerBase();
                     break;
                 }
-                snake.turn(keyStroke);
+                player.getGame().getSnake().turn(keyStroke);
                 tg.setForegroundColor(TextColor.ANSI.CYAN);
-                tg.putString(1, 1, "Current direction: " + snake.getDirection());
-                tg.putString(1, 2, "Current dx: " + snake.getDx());
-                tg.putString(1, 3, "Current dy: " + snake.getDy());
+                tg.putString(1, 1, "Current direction: " + player.getGame().getSnake().getDirection());
+                tg.putString(1, 2, "Current dx: " + player.getGame().getSnake().getDx());
+                tg.putString(1, 3, "Current dy: " + player.getGame().getSnake().getDy());
                 screen.refresh();
                 screen.clear();
-                System.out.println(snake.getDirection());
+                System.out.println(player.getGame().getSnake().getDirection());
             }
         }
         screen.stopScreen();
     }
 
     // EFFECTS: gets player name and displays player profile
-    private void initPlayer() {
+    private Player initPlayer() {
         System.out.println("Are you a returning player?");
         String returning = input.nextLine();
-        processInput(returning);
+        return processInput(returning);
     }
 
     // EFFECTS: gets snake colour and board dimensions, then sets up game
-    public void initGame() {
+    public Game initGame() {
         System.out.println("Pick your snake colour: ");
         Color color = getColor(input.nextLine());
         System.out.println("How wide do you want the board to be?");
         int width = input.nextInt();
         System.out.println("How tall do you want the board to be?");
         int height = input.nextInt();
-        initSnakeAndBoard(color, width, height);
-    }
-
-    // EFFECTS: creates a new snake with given color and board with given dimensions
-    public void initSnakeAndBoard(Color color, int width, int height) {
-        snake = new Snake(new Direction(1), 1, 1, color);
+        Game game = new Game(width, height, color);
         System.out.println("Starting game with " + width + " x " + height + " board!");
-        game.setBoardWidth(width);
-        game.setBoardHeight(height);
+        System.out.println("Press 'escape' at any time to save and quit!");
+        return game;
     }
 
     // EFFECTS: prints out player name and their past high scores for an existing player
@@ -138,7 +130,7 @@ public class SnakeAppLanterna {
     // Credit: JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: processes user input
-    public void processInput(String userInput) {
+    public Player processInput(String userInput) {
         boolean inputYes = userInput.equalsIgnoreCase("yes");
         boolean inputNo = userInput.equalsIgnoreCase("no");
         if (!inputYes && !inputNo) {
@@ -150,10 +142,14 @@ public class SnakeAppLanterna {
         loadPlayerBase();
         if (inputYes) {
             displayExistingProfile(pb.getPlayerProfile(name));
+            return pb.getPlayerProfile(name);
         } else if (inputNo) {
             addPlayer(name);
             savePlayerBase();
+            return pb.getPlayerProfile(name);
         }
+        // should not reach here
+        return null;
     }
 
     // MODIFIES: p
@@ -190,7 +186,7 @@ public class SnakeAppLanterna {
             jsonWriter.open();
             jsonWriter.write(pb);
             jsonWriter.close();
-            System.out.println("Saved PlayerBase to " + JSON_STORE);
+            System.out.println("Saved PlayerBase to " + JSON_STORE + "\n");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }

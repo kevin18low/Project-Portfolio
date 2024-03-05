@@ -40,9 +40,9 @@ public class JsonReaderTest {
     void testReaderGeneralPlayerBase() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralPlayerBase.json");
         try {
-            PlayerBase wr = reader.read();
-            List<Player> thingies = wr.getPlayers();
-            assertEquals(4, thingies.size());
+            PlayerBase pb = reader.read();
+            List<Player> players = pb.getPlayers();
+            assertEquals(4, players.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

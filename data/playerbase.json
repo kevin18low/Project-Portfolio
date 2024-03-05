@@ -1,18 +1,17 @@
 {"Players": [
     {
+        "Game": "Current game: Board of width 0, height of 0, snake of length 1 with direction 1, position (1, 1)",
         "Scores": [0],
         "Name": "kevin"
     },
     {
-        "Scores": [0],
-        "Name": "john"
-    },
-    {
+        "Game": "Current game: Board of width 0, height of 0, snake of length 1 with direction 1, position (1, 1)",
         "Scores": [0],
         "Name": "bob"
     },
     {
+        "Game": "Current game: Board of width 4, height of 12, snake of length 1 with direction -2, position (1, 1)",
         "Scores": [0],
-        "Name": "tom"
+        "Name": "john"
     }
 ]}

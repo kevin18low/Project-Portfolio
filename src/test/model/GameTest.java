@@ -5,14 +5,18 @@ import com.googlecode.lanterna.input.KeyStroke;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
     private Game g1;
+    private Snake s1;
     private KeyStroke ks;
 
     @BeforeEach
     public void setup() {
-        g1 = new Game(8, 8);
+        g1 = new Game(8, 8, Color.green);
+        s1 = g1.getSnake();
         ks = new KeyStroke(KeyType.Tab);
     }
 
@@ -73,6 +77,24 @@ public class GameTest {
         assertFalse(g1.isGameOver());
         g1.setGameOver(true);
         assertTrue(g1.isGameOver());
+    }
+
+    @Test
+    public void getSnakeTest() {
+        assertEquals(g1.getSnake(), s1);
+    }
+
+    @Test
+    public void getScoreTest() {
+        assertEquals(g1.getScore(), 0);
+    }
+
+    @Test
+    public void toStringTest() {
+        assertEquals(g1.toString(), "Current game: " +
+                "Board of width 8, height of 8, snake of length 1 with direction 1," +
+                " position (1, 1)");
+
     }
 
 }
