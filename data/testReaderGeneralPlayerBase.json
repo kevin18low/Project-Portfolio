@@ -1,0 +1,18 @@
+{"Players": [
+  {
+    "Scores": [0, 10, 15],
+    "Name": "kevin"
+  },
+  {
+    "Scores": [100, 200],
+    "Name": "john"
+  },
+  {
+    "Scores": [50],
+    "Name": "bob"
+  },
+  {
+    "Scores": [0],
+    "Name": "tom"
+  }
+]}
