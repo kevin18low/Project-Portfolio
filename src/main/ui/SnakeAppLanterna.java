@@ -9,16 +9,15 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import model.Game;
 import model.Player;
 import model.PlayerBase;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import java.awt.*;
 import java.io.IOException;
-
-import static java.awt.Color.getColor;
 
 // Represents a SnakeApp that runs a game of snake
 
@@ -31,6 +30,7 @@ public class SnakeAppLanterna {
     private Scanner input;
     private PlayerBase pb;
     private Player player;
+    private String name;
 
     // Runs a game of snake
     public SnakeAppLanterna() throws IOException {
@@ -49,10 +49,12 @@ public class SnakeAppLanterna {
     }
 
     // EFFECTS: set up the game by initializing the board, snake, and player
-    public void setup() {
+    public void setup() throws IOException {
         System.out.println("Welcome to Snake!");
         player = initPlayer();
-        player.setGame(initGame());
+        System.out.println("Load game, or new game?");
+        String userInput = input.nextLine();
+        updateGameData(name, userInput);
     }
 
     // EFFECTS: set up the screen and controls for the game
@@ -93,7 +95,7 @@ public class SnakeAppLanterna {
     // EFFECTS: gets snake colour and board dimensions, then sets up game
     public Game initGame() {
         System.out.println("Pick your snake colour: ");
-        Color color = getColor(input.nextLine());
+        String color = input.nextLine();
         System.out.println("How wide do you want the board to be?");
         int width = input.nextInt();
         System.out.println("How tall do you want the board to be?");
@@ -135,10 +137,10 @@ public class SnakeAppLanterna {
         boolean inputNo = userInput.equalsIgnoreCase("no");
         if (!inputYes && !inputNo) {
             System.out.println("Please enter yes or no.");
-            initPlayer();
+            return initPlayer();
         }
         System.out.println("Please enter your name: ");
-        String name = input.nextLine();
+        name = input.nextLine();
         loadPlayerBase();
         if (inputYes) {
             displayExistingProfile(pb.getPlayerProfile(name));
@@ -152,6 +154,28 @@ public class SnakeAppLanterna {
         return null;
     }
 
+    // MODIFIES: player
+    // EFFECTS: start a new game, or load game from player's profile
+    public void updateGameData(String name, String userInput) throws IOException {
+        JSONObject jsonObject = new JSONObject(jsonReader.readFile(JSON_STORE));
+        JSONArray jsonArray = jsonObject.getJSONArray("Players");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonPlayer = jsonArray.getJSONObject(i);
+            if (userInput.equalsIgnoreCase("new")) {
+                if (jsonPlayer.get("Name").equals(name)) {
+                    Game g = initGame();
+                    jsonPlayer.put("Game", g.toString());
+                    player.setGame(g);
+                    break;
+                }
+            } else if (userInput.equalsIgnoreCase("load")) {
+                System.out.println("Loading game... get ready!");
+                System.out.println(player.getGame().toString());
+                break;
+            }
+        }
+    }
+
     // MODIFIES: p
     // EFFECTS: add a score to given player's score list
     public void addScore(Player p, int score) {
@@ -162,7 +186,7 @@ public class SnakeAppLanterna {
     // Credit: JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads PlayerBase from file
-    private void loadPlayerBase() {
+    private void loadPlayerBase()  {
         try {
             pb = jsonReader.read();
             System.out.println("Loaded PlayerBase from " + JSON_STORE + "\n");

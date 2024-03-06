@@ -5,8 +5,6 @@ import com.googlecode.lanterna.input.KeyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SnakeTest {
@@ -23,8 +21,8 @@ public class SnakeTest {
 
     @BeforeEach
     public void setup() {
-        s1 = new Snake(new Direction(1), 50, 50, Color.green);
-        s2 = new Snake(new Direction(-2), 15, 70, Color.blue);
+        s1 = new Snake(new Direction(1), 50, 50, 1,"green");
+        s2 = new Snake(new Direction(-2), 15, 70, 10, "blue");
         f1 = new Food(50, 50);
         f2 = new Food(15, 45);
         f3 = new Food(95, 70);
@@ -170,7 +168,7 @@ public class SnakeTest {
     @Test
     public void setSnakeLengthTest() {
         assertEquals(s1.getSnakeLength(),1);
-        assertEquals(s2.getSnakeLength(),1);
+        assertEquals(s2.getSnakeLength(),10);
         s1.setSnakeLength(3);
         s2.setSnakeLength(8);
         assertEquals(s1.getSnakeLength(),3);
@@ -180,7 +178,7 @@ public class SnakeTest {
     @Test
     public void getSnakeLengthTest() {
         assertEquals(s1.getSnakeLength(),1);
-        assertEquals(s2.getSnakeLength(),1);
+        assertEquals(s2.getSnakeLength(),10);
         s1.setSnakeLength(3);
         s2.setSnakeLength(8);
         assertEquals(s1.getSnakeLength(),3);
@@ -189,21 +187,21 @@ public class SnakeTest {
 
     @Test
     public void setColorTest() {
-        assertEquals(s1.getColor(), Color.green);
-        assertEquals(s2.getColor(), Color.blue);
-        s1.setColor(Color.red);
-        s2.setColor(Color.pink);
-        assertEquals(s1.getColor(), Color.red);
-        assertEquals(s2.getColor(), Color.pink);
+        assertEquals(s1.getColor(), "green");
+        assertEquals(s2.getColor(), "blue");
+        s1.setColor("red");
+        s2.setColor("pink");
+        assertEquals(s1.getColor(), "red");
+        assertEquals(s2.getColor(), "pink");
     }
 
     @Test
     public void getColorTest() {
-        assertEquals(s1.getColor(), Color.green);
-        assertEquals(s2.getColor(), Color.blue);
-        s1.setColor(Color.red);
-        s2.setColor(Color.pink);
-        assertEquals(s1.getColor(), Color.red);
-        assertEquals(s2.getColor(), Color.pink);
+        assertEquals(s1.getColor(), "green");
+        assertEquals(s2.getColor(), "blue");
+        s1.setColor("red");
+        s2.setColor("pink");
+        assertEquals(s1.getColor(), "red");
+        assertEquals(s2.getColor(), "pink");
     }
 }

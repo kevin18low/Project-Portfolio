@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.*;
-
 import com.googlecode.lanterna.input.KeyStroke;
 
 import static java.lang.Math.abs;
@@ -13,12 +11,12 @@ public class Snake {
     private int snakeLength;
     private int snakeX;
     private int snakeY;
-    private Color color;
+    private String color;
 
     // Make a snake object going in given direction at position (x, y) with colour c
-    public Snake(Direction direction, int x, int y, Color c) {
+    public Snake(Direction direction, int x, int y, int length, String c) {
         this.direction = direction;
-        this.snakeLength = 1;
+        this.snakeLength = length;
         this.snakeX = x;
         this.snakeY = y;
         this.color = c;
@@ -93,7 +91,7 @@ public class Snake {
         this.snakeY = snakeY;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -109,7 +107,7 @@ public class Snake {
         return snakeY;
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 }

@@ -54,7 +54,6 @@ public class JsonWriterTest {
             pb.addPlayer(new Player("kevin"));
             pb.addPlayer(new Player("bob"));
             pb.addPlayer(new Player("john"));
-            pb.addPlayer(new Player("tom"));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralPlayerBase.json");
             writer.open();
             writer.write(pb);
@@ -63,7 +62,7 @@ public class JsonWriterTest {
             JsonReader reader = new JsonReader("./data/testWriterGeneralPlayerBase.json");
             pb = reader.read();
             List<Player> players = pb.getPlayers();
-            assertEquals(4, players.size());
+            assertEquals(3, players.size());
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");

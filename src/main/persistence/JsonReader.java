@@ -1,7 +1,6 @@
 package persistence;
 
-import model.Player;
-import model.PlayerBase;
+import model.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -31,7 +30,7 @@ public class JsonReader {
     }
 
     // EFFECTS: reads source file as string and returns it
-    private String readFile(String source) throws IOException {
+    public String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
@@ -43,7 +42,6 @@ public class JsonReader {
 
     // EFFECTS: parses PlayerBase from JSON object and returns it
     private PlayerBase parsePlayerBase(JSONObject jsonObject) {
-        //String name = jsonObject.getString("name");
         PlayerBase pb = new PlayerBase();
         addPlayers(pb, jsonObject);
         return pb;
@@ -64,6 +62,22 @@ public class JsonReader {
     private void addPlayer(PlayerBase pb, JSONObject jsonObject) {
         String name = jsonObject.getString("Name");
         Player player = new Player(name);
+        addGame(jsonObject, player);
         pb.addPlayer(player);
+    }
+
+    // MODIFIES: p
+    // EFFECTS: adds a game to the player's profile to be saved
+    public void addGame(JSONObject jsonObject, Player p) {
+        int width = jsonObject.getInt("Width");
+        int height = jsonObject.getInt("Height");
+        String c = jsonObject.getString("Color");
+        int length = jsonObject.getInt("Length");
+        int d = jsonObject.getInt("Direction");
+        int x = jsonObject.getInt("X");
+        int y = jsonObject.getInt("Y");
+        int score = jsonObject.getInt("Score");
+        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score);
+        p.setGame(g);
     }
 }

@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +18,11 @@ public class Player implements Writable {
         this.name = name;
         this.scores = new ArrayList<>();
         scores.add(0);
-        game = new Game(0,0, Color.black);
+        game = new Game(0,0, "black");
     }
 
+    // MODIFIES: this
+    // EFFECTS: add given score to player's score list
     public void addScore(int score) {
         scores.add(score);
     }
@@ -33,7 +34,14 @@ public class Player implements Writable {
         JSONObject json = new JSONObject();
         json.put("Name", name);
         json.put("Scores", scores);
-        json.put("Game", game.toString());
+        json.put("Width", game.getBoardWidth());
+        json.put("Height", game.getBoardHeight());
+        json.put("Color", game.getSnake().getColor());
+        json.put("Length", game.getSnake().getSnakeLength());
+        json.put("Direction", game.getSnake().getDirection());
+        json.put("X", game.getSnake().getSnakeX());
+        json.put("Y", game.getSnake().getSnakeY());
+        json.put("Score", game.getScore());
         return json;
     }
 

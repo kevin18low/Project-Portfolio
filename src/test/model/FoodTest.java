@@ -3,8 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FoodTest {
@@ -14,7 +12,7 @@ public class FoodTest {
 
     @BeforeEach
     public void setup() {
-        s1 = new Snake(new Direction(1), 50, 50, Color.green);
+        s1 = new Snake(new Direction(1), 50, 50, 1, "green");
         f1 = new Food(50, 50);
         f2 = new Food(15, 45);
     }

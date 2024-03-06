@@ -3,8 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
@@ -15,7 +13,7 @@ public class PlayerTest {
     @BeforeEach
     public void setup() {
         p1 = new Player("p1");
-        g1 = new Game(10,10, Color.black);
+        g1 = new Game(10,10, "black");
     }
 
     @Test

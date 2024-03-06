@@ -3,8 +3,6 @@ package model;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
-import java.awt.*;
-
 // Represents the game board with a width and height, and boolean values indicating
 // whether the game has been paused or is over
 
@@ -19,23 +17,32 @@ public class Game {
     private boolean gameOver;
 
     // Create a game with given width and height. Starts unpaused
-    public Game(int width, int height, Color color) {
+    public Game(int width, int height, String color) {
         this.boardWidth = width;
         this.boardHeight = height;
         this.paused = false;
         this.gameOver = false;
-        this.snake = new Snake(new Direction(1), 1, 1, color);
+        this.snake = new Snake(new Direction(1), 1, 1, 1, color);
         score = 0;
     }
 
-    //MODIFIES: this
-    //EFFECTS: changes paused to true when "p" is pressed
+    // Constructor for saving games in progress
+    public Game(int width, int height, Snake s, int score) {
+        this.boardWidth = width;
+        this.boardHeight = height;
+        this.snake = s;
+        this.score = score;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes paused to true when "p" is pressed
     public void pauseGame(KeyStroke ks) {
         if (ks.getKeyType() == KeyType.Tab) {
             setPaused(true);
         }
     }
 
+    // EFFECTS: convert game to string
     public String toString() {
         return "Current game: "
                 + "Board of width " + boardWidth

@@ -5,8 +5,6 @@ import com.googlecode.lanterna.input.KeyStroke;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
     private Game g1;
@@ -15,7 +13,7 @@ public class GameTest {
 
     @BeforeEach
     public void setup() {
-        g1 = new Game(8, 8, Color.green);
+        g1 = new Game(8, 8, "green");
         s1 = g1.getSnake();
         ks = new KeyStroke(KeyType.Tab);
     }
