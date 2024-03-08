@@ -8,11 +8,14 @@ public class Food {
     private int foodY;
     private boolean eaten;
 
+    // Create a food object at (x,y)
     public Food(int x, int y) {
         this.foodX = x;
         this.foodY = y;
         this.eaten = false;
     }
+
+    //*************** getters and setters **************
 
     public int getFoodX() {
         return foodX;

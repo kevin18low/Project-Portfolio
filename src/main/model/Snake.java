@@ -13,7 +13,7 @@ public class Snake {
     private int snakeY;
     private String color;
 
-    // Make a snake object going in given direction at position (x, y) with colour c
+    // Make a snake object going in given direction at position (x, y) with length and colour c
     public Snake(Direction direction, int x, int y, int length, String c) {
         this.direction = direction;
         this.snakeLength = length;

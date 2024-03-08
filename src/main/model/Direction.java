@@ -2,6 +2,9 @@ package model;
 
 import static java.lang.Math.*;
 
+// Represents the direction that the snake is facing, and the speed it is going at in
+// the x and y directions
+
 public class Direction {
     private int direction;
     private int dx;

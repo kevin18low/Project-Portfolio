@@ -48,7 +48,7 @@ public class SnakeAppLanterna {
 
     }
 
-    // EFFECTS: set up the game by initializing the board, snake, and player
+    // EFFECTS: set up the game by initializing the player and the game
     public void setup() throws IOException {
         System.out.println("Welcome to Snake!");
         player = initPlayer();
@@ -92,7 +92,7 @@ public class SnakeAppLanterna {
         return processInput(returning);
     }
 
-    // EFFECTS: gets snake colour and board dimensions, then sets up game
+    // EFFECTS: returns game with given snake colour and board dimensions
     public Game initGame() {
         System.out.println("Pick your snake colour: ");
         String color = input.nextLine();

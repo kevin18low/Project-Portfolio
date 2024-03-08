@@ -5,6 +5,7 @@ import com.googlecode.lanterna.input.KeyType;
 
 // Represents the game board with a width and height, and boolean values indicating
 // whether the game has been paused or is over
+// Games in progress have a snake and score
 
 public class Game {
     private int boardWidth;
