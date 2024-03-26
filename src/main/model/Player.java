@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -43,8 +44,22 @@ public class Player implements Writable {
         json.put("Direction", game.getSnake().getDirection());
         json.put("X", game.getSnake().getSnakeX());
         json.put("Y", game.getSnake().getSnakeY());
+        json.put("Head", headToJson());
+        json.put("Body", bodyToJson());
         json.put("Score", game.getScore());
         return json;
+    }
+
+    public JSONObject headToJson() {
+        return game.getSnake().getHead().toJson();
+    }
+
+    public JSONArray bodyToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Position p : game.getSnake().getBody()) {
+            jsonArray.put(p.toJson());
+        }
+        return jsonArray;
     }
 
     //*************** getters and setters **************

@@ -3,6 +3,8 @@ package model;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
+import java.lang.Math.*;
+
 // Represents the game board with a width and height, and boolean values indicating
 // whether the game has been paused or is over
 // Games in progress have a snake and score
@@ -13,6 +15,10 @@ public class Game {
 
     private Snake snake;
     private int score;
+
+    private Food food;
+    private int randX = (int)(10 * Math.random());
+    private int randY = (int)(10 * Math.random());
 
     private boolean paused;
     private boolean gameOver;
@@ -25,14 +31,16 @@ public class Game {
         this.gameOver = false;
         this.snake = new Snake(new Direction(1), 1, 1, 1, color);
         score = 0;
+        this.food = new Food(randX, randY);
     }
 
     // Constructor for saving games in progress
-    public Game(int width, int height, Snake s, int score) {
+    public Game(int width, int height, Snake s, int score, Food f) {
         this.boardWidth = width;
         this.boardHeight = height;
         this.snake = s;
         this.score = score;
+        this.food = f;
     }
 
     // MODIFIES: this
@@ -43,6 +51,13 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: game changes after clock tick. Snake moves in current direction
+    public void tick() {
+        snake.move();
+
+    }
+
     // EFFECTS: convert game to string
     public String toString() {
         return "Current game: "
@@ -50,7 +65,7 @@ public class Game {
                 + ", height of " + boardHeight
                 + ", snake of length " + snake.getSnakeLength()
                 + " with direction " + snake.getDirection()
-                + ", position (" + snake.getSnakeX() + ", "
+                + ", head position (" + snake.getSnakeX() + ", "
                 + snake.getSnakeY() + ")";
     }
 
@@ -94,5 +109,9 @@ public class Game {
 
     public int getScore() {
         return score;
+    }
+
+    public Food getFood() {
+        return food;
     }
 }

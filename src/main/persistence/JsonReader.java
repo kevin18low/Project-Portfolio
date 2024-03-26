@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.json.*;
@@ -71,13 +73,45 @@ public class JsonReader {
     public void addGame(JSONObject jsonObject, Player p) {
         int width = jsonObject.getInt("Width");
         int height = jsonObject.getInt("Height");
+
         String c = jsonObject.getString("Color");
         int length = jsonObject.getInt("Length");
+
         int d = jsonObject.getInt("Direction");
         int x = jsonObject.getInt("X");
         int y = jsonObject.getInt("Y");
         int score = jsonObject.getInt("Score");
-        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score);
+
+        List<Position> body = makeBody(p, jsonObject);
+        Position head = makeHead(p, jsonObject);
+        Food f = new Food(x, y);
+//        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score, f);
+        Game g = new Game(width, height, new Snake(new Direction(d), head, body, length, c), score, f);
         p.setGame(g);
     }
+
+    public List<Position> makeBody(Player p, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("Body");
+        for (Object json : jsonArray) {
+            JSONObject nextPos = (JSONObject) json;
+            addBody(p, nextPos);
+        }
+        return p.getGame().getSnake().getBody();
+    }
+
+    public void addBody(Player p, JSONObject jsonObject) {
+        int x = jsonObject.getInt("x");
+        int y = jsonObject.getInt("y");
+        Position pos = new Position(x, y);
+        p.getGame().getSnake().getBody().add(pos);
+    }
+
+    public Position makeHead(Player p, JSONObject jsonObject) {
+        JSONObject head = (JSONObject) jsonObject.get("Head");
+        int x = head.getInt("x");
+        int y = head.getInt("y");
+        Position pos = new Position(x, y);
+        return pos;
+    }
+
 }

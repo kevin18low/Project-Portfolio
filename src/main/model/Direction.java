@@ -10,12 +10,14 @@ public class Direction {
     private int dx;
     private int dy;
 
+    // Create a direction representing x or y directions with a respective dx and dy
     public Direction(int direction) {
         this.direction = direction;
         this.dx = findDx(direction);
         this.dy = findDy(direction);
     }
 
+    // EFFECTS: gets dx based on current direction
     public int findDx(int direction) {
         if (abs(direction) == 1) {
             return direction;
@@ -24,6 +26,7 @@ public class Direction {
         }
     }
 
+    // EFFECTS: gets dy based on current direction
     public int findDy(int direction) {
         if (abs(direction) == 2) {
             return direction / (abs(direction));
@@ -31,6 +34,8 @@ public class Direction {
             return 0;
         }
     }
+
+    //*************** getters and setters **************
 
     public int getDirection() {
         return this.direction;

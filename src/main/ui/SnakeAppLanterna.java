@@ -31,9 +31,10 @@ public class SnakeAppLanterna {
     private PlayerBase pb;
     private Player player;
     private String name;
+    private SnakeGUI sgui;
 
     // Runs a game of snake
-    public SnakeAppLanterna() throws IOException {
+    public SnakeAppLanterna() throws IOException, InterruptedException {
         input = new Scanner(System.in);
         pb = new PlayerBase();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -42,26 +43,29 @@ public class SnakeAppLanterna {
     }
 
     // EFFECTS: runs program
-    public void run() throws IOException {
+    public void run() throws IOException, InterruptedException {
         setup();
         screenDisplay();
 
     }
 
     // EFFECTS: set up the game by initializing the player and the game
-    public void setup() throws IOException {
+    public void setup() throws IOException, InterruptedException {
         System.out.println("Welcome to Snake!");
         player = initPlayer();
         System.out.println("Load game, or new game?");
         String userInput = input.nextLine();
         updateGameData(name, userInput);
+        System.out.println("Press 'esc' to save and quit, or close the game.");
     }
 
     // EFFECTS: set up the screen and controls for the game
-    public void screenDisplay() throws IOException {
+    public void screenDisplay() throws IOException, InterruptedException {
         screen = new DefaultTerminalFactory().createScreen();
+        sgui = new SnakeGUI(player, screen);
         TextGraphics tg = screen.newTextGraphics();
         screen.startScreen();
+        sgui.start();
 
         while (true) {
             KeyStroke keyStroke = screen.pollInput();
@@ -102,7 +106,6 @@ public class SnakeAppLanterna {
         int height = input.nextInt();
         Game game = new Game(width, height, color);
         System.out.println("Starting game with " + width + " x " + height + " board!");
-        System.out.println("Press 'escape' at any time to save and quit!");
         return game;
     }
 
@@ -205,7 +208,7 @@ public class SnakeAppLanterna {
 
     // Credit: JsonSerializationDemo
     // EFFECTS: saves the PlayerBase to file
-    private void savePlayerBase() {
+    protected void savePlayerBase() {
         try {
             jsonWriter.open();
             jsonWriter.write(pb);

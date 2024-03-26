@@ -2,6 +2,8 @@ package model;
 
 import com.googlecode.lanterna.input.KeyStroke;
 
+import java.util.*;
+
 import static java.lang.Math.abs;
 
 // Represents a snake with a current direction, length, x position, y position, and color
@@ -9,6 +11,8 @@ import static java.lang.Math.abs;
 public class Snake {
     private Direction direction;
     private int snakeLength;
+    private Position head;
+    private List<Position> body;
     private int snakeX;
     private int snakeY;
     private String color;
@@ -17,8 +21,19 @@ public class Snake {
     public Snake(Direction direction, int x, int y, int length, String c) {
         this.direction = direction;
         this.snakeLength = length;
-        this.snakeX = x;
-        this.snakeY = y;
+//        this.snakeX = x;
+//        this.snakeY = y;
+        this.head = new Position(x, y);
+        this.body = new ArrayList<>();
+        this.color = c;
+    }
+
+    // Constructor for saving snake in progress
+    public Snake(Direction direction, Position head, List<Position> body, int length, String c) {
+        this.direction = direction;
+        this.snakeLength = length;
+        this.head = head;
+        this.body = body;
         this.color = c;
     }
 
@@ -57,7 +72,7 @@ public class Snake {
     // EFFECTS: returns true if snake has eaten food
     //          adds 1 to snakeLength and changes Food f eaten to true;
     public boolean ateFood(Food f) {
-        if (snakeX == f.getFoodX() && snakeY == f.getFoodY()) {
+        if (head.getPosX() == f.getFoodX() && head.getPosY() == f.getFoodY()) {
             snakeLength++;
             f.setEaten(true);
             return true;
@@ -65,7 +80,35 @@ public class Snake {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: entire snake position changes. Head moves, and all body parts
+    public void move() {
+        if (body.size() > 0) {
+            body.remove(body.size() - 1);
+        }
+        body.add(0, head);
+        if (direction.getDx() == 0) {
+            head.setPosY(head.getPosY() + direction.getDy());
+        } else {
+            head.setPosX(head.getPosX() + direction.getDx());
+        }
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: eat food. Length, score, and body length increase by 1
+    public void eatFood() {
+        // eat
+    }
+
     //*************** getters and setters **************
+    public Position getHead() {
+        return head;
+    }
+
+    public List<Position> getBody() {
+        return body;
+    }
 
     public int getDirection() {
         return direction.getDirection();
