@@ -1,75 +1,20 @@
 {"Players": [
     {
         "Head": {
-            "x": 62,
+            "x": 1,
             "y": 1
         },
         "Score": 0,
         "Length": 1,
-        "Color": "blue",
+        "Color": "black",
         "Scores": [0],
         "X": 0,
         "Y": 0,
-        "Height": 4,
-        "Width": 4,
+        "Height": 0,
+        "Width": 0,
         "Direction": 1,
-        "Body": [{
-            "x": 62,
-            "y": 1
-        }],
+        "Body": [],
         "Name": "kevin"
-    },
-    {
-        "Head": {
-            "x": 10,
-            "y": 10
-        },
-        "Score": 2,
-        "Length": 2,
-        "Color": "blue",
-        "Scores": [0],
-        "X": 0,
-        "Y": 0,
-        "Height": 5,
-        "Width": 5,
-        "Direction": 2,
-        "Body": [
-            {
-                "x": 11,
-                "y": 10
-            },
-            {
-                "x": 12,
-                "y": 10
-            }
-        ],
-        "Name": "bob"
-    },
-    {
-        "Head": {
-            "x": 10,
-            "y": 10
-        },
-        "Score": 5,
-        "Length": 5,
-        "Color": "green",
-        "Scores": [0],
-        "X": 0,
-        "Y": 0,
-        "Height": 8,
-        "Width": 8,
-        "Direction": 2,
-        "Body": [
-            {
-                "x": 11,
-                "y": 10
-            },
-            {
-                "x": 12,
-                "y": 10
-            }
-        ],
-        "Name": "john"
     },
     {
         "Head": {
@@ -86,6 +31,23 @@
         "Width": 0,
         "Direction": 1,
         "Body": [],
-        "Name": "john"
+        "Name": "bob"
+    },
+    {
+        "Head": {
+            "x": 1,
+            "y": 1
+        },
+        "Score": 0,
+        "Length": 1,
+        "Color": "black",
+        "Scores": [0],
+        "X": 0,
+        "Y": 0,
+        "Height": 0,
+        "Width": 0,
+        "Direction": 1,
+        "Body": [],
+        "Name": "cam"
     }
 ]}

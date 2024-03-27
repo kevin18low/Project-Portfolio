@@ -29,15 +29,11 @@
 //
 //
 //public class SnakeApp extends JFrame {
-//    private static final int TICKS_PER_SECOND = 10;
-//
-//    public static final int GAME_TAB_INDEX = 0;
-//    public static final int PLAYER_TAB_INDEX = 1;
-//    public static final int SCORE_TAB_INDEX = 2;
 //
 //    public static final int WIDTH = 600;
 //    public static final int HEIGHT = 400;
 //
+//    private static final int TICKS_PER_SECOND = 10;
 //    private static final String JSON_STORE = "./data/playerbase.json";
 //    private JsonReader jsonReader;
 //    private JsonWriter jsonWriter;
@@ -64,7 +60,6 @@
 //    public void run() throws IOException, InterruptedException {
 //        setup();
 //        screenDisplay();
-//
 //    }
 //
 //    // EFFECTS: set up the game by initializing the player and the game
