@@ -1,14 +1,18 @@
 package ui;
 
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import model.Game;
-import model.Player;
-import model.PlayerBase;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.JsonReader;
@@ -23,6 +27,9 @@ import java.io.IOException;
 
 public class SnakeAppLanterna {
     private Screen screen;
+    private WindowBasedTextGUI endGui;
+    private TextGraphics text;
+    private static final int TICKS_PER_SECOND = 10;
 
     private static final String JSON_STORE = "./data/playerbase.json";
     private JsonReader jsonReader;
@@ -31,7 +38,8 @@ public class SnakeAppLanterna {
     private PlayerBase pb;
     private Player player;
     private String name;
-    private SnakeGUI sgui;
+
+    private Game game;
 
     // Runs a game of snake
     public SnakeAppLanterna() throws IOException, InterruptedException {
@@ -57,36 +65,6 @@ public class SnakeAppLanterna {
         String userInput = input.nextLine();
         updateGameData(name, userInput);
         System.out.println("Press 'esc' to save and quit, or close the game.");
-    }
-
-    // EFFECTS: set up the screen and controls for the game
-    public void screenDisplay() throws IOException, InterruptedException {
-        screen = new DefaultTerminalFactory().createScreen();
-        sgui = new SnakeGUI(player, screen);
-        TextGraphics tg = screen.newTextGraphics();
-        screen.startScreen();
-        sgui.start();
-
-        while (true) {
-            KeyStroke keyStroke = screen.pollInput();
-            if (keyStroke != null) {
-                System.out.println(keyStroke);
-                if (keyStroke.getKeyType() == KeyType.Escape) {
-                    System.out.println("Saving and quitting...");
-                    savePlayerBase();
-                    break;
-                }
-                player.getGame().getSnake().turn(keyStroke);
-                tg.setForegroundColor(TextColor.ANSI.CYAN);
-                tg.putString(1, 1, "Current direction: " + player.getGame().getSnake().getDirection());
-                tg.putString(1, 2, "Current dx: " + player.getGame().getSnake().getDx());
-                tg.putString(1, 3, "Current dy: " + player.getGame().getSnake().getDy());
-                screen.refresh();
-                screen.clear();
-                System.out.println(player.getGame().getSnake().getDirection());
-            }
-        }
-        screen.stopScreen();
     }
 
     // EFFECTS: gets player name and displays player profile
@@ -208,7 +186,7 @@ public class SnakeAppLanterna {
 
     // Credit: JsonSerializationDemo
     // EFFECTS: saves the PlayerBase to file
-    protected void savePlayerBase() {
+    private void savePlayerBase() {
         try {
             jsonWriter.open();
             jsonWriter.write(pb);
@@ -216,6 +194,156 @@ public class SnakeAppLanterna {
             System.out.println("Saved PlayerBase to " + JSON_STORE + "\n");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+
+
+
+    public void screenDisplay() throws IOException, InterruptedException {
+        screen = new DefaultTerminalFactory().createScreen();
+        screen.startScreen();
+
+        TerminalSize terminalSize = screen.getTerminalSize();
+
+        game = player.getGame();
+
+        beginTicks();
+    }
+
+    /**
+     * Begins the game cycle. Ticks once every Game.TICKS_PER_SECOND until
+     * game has ended and the endGui has been exited.
+     //     */
+    private void beginTicks() throws IOException, InterruptedException {
+        while (!game.isGameOver() || endGui.getActiveWindow() != null) {
+            KeyStroke keyStroke = screen.pollInput();
+            if (keyStroke != null) {
+                System.out.println(keyStroke);
+                if (keyStroke.getKeyType() == KeyType.Escape) {
+                    System.out.println("Saving and quitting...");
+                    savePlayerBase();
+                    break;
+                }
+                player.getGame().getSnake().turn(keyStroke);
+                System.out.println(player.getGame().getSnake().getDirection());
+            }
+            tick();
+            Thread.sleep(1000L / TICKS_PER_SECOND);
+        }
+
+        System.exit(0);
+    }
+
+    /**
+     * Handles one cycle in the game by taking user input,
+     * ticking the game internally, and rendering the effects
+     */
+    private void tick() throws IOException {
+        handleUserInput();
+
+        game.tick();
+
+        screen.setCursorPosition(new TerminalPosition(0, 0));
+        screen.clear();
+        render();
+        screen.refresh();
+
+        screen.setCursorPosition(new TerminalPosition(screen.getTerminalSize().getColumns() - 1, 0));
+    }
+
+    /**
+     * Sets the snake's direction corresponding to the
+     * user's keystroke
+     */
+    private void handleUserInput() throws IOException {
+        KeyStroke stroke = screen.pollInput();
+
+        if (stroke == null) {
+            return;
+        }
+
+        if (stroke.getCharacter() != null) {
+            return;
+        }
+        game.getSnake().keyDirection(stroke);
+    }
+
+    /**
+     * Renders the current screen.
+     * Draws the end screen if the game has ended, otherwise
+     * draws the score, snake, and food.
+     */
+    private void render() {
+        if (game.isGameOver()) {
+            if (endGui == null) {
+                drawEndScreen();
+            }
+
+            return;
+        }
+
+        drawScore();
+        drawDirection();
+        drawSnake();
+        drawFood();
+    }
+
+    private void drawEndScreen() {
+        endGui = new MultiWindowTextGUI(screen);
+
+        new MessageDialogBuilder()
+                .setTitle("Game over!")
+                .setText("You finished with a score of " + game.getScore() + "!")
+                .addButton(MessageDialogButton.Close)
+                .build()
+                .showDialog(endGui);
+    }
+
+    private void drawScore() {
+        text = screen.newTextGraphics();
+        text.setForegroundColor(TextColor.ANSI.WHITE);
+        text.putString(1, 0, "Score: ");
+
+        text = screen.newTextGraphics();
+        text.setForegroundColor(TextColor.ANSI.WHITE);
+        text.putString(8, 0, String.valueOf(game.getScore()));
+    }
+
+    private void drawDirection() {
+        text = screen.newTextGraphics();
+        text.setForegroundColor(TextColor.ANSI.WHITE);
+        text.putString(50, 1, "Current direction: " + player.getGame().getSnake().getDirection());
+        text.putString(50, 2, "Current dx: " + player.getGame().getSnake().getDx());
+        text.putString(50, 3, "Current dy: " + player.getGame().getSnake().getDy());
+    }
+
+    private void drawSnake() {
+        Snake snake = game.getSnake();
+
+        drawPosition(snake.getHead(), TextColor.ANSI.GREEN, '\u2588', true);
+
+        for (Position pos : snake.getBody()) {
+            drawPosition(pos, TextColor.ANSI.GREEN, '\u2588', true);
+        }
+    }
+
+    private void drawFood() {
+        Position pos = new Position(game.getFood().getFoodX(), game.getFood().getFoodY());
+        drawPosition(pos, TextColor.ANSI.RED, '\u2B24', false);
+    }
+
+    /**
+     * Draws a character in a given position on the terminal.
+     * If wide, it will draw the character twice to make it appear wide.
+     */
+    private void drawPosition(Position pos, TextColor color, char c, boolean wide) {
+        TextGraphics text = screen.newTextGraphics();
+        text.setForegroundColor(color);
+        text.putString(pos.getPosX() * 2, pos.getPosY() + 1, String.valueOf(c));
+
+        if (wide) {
+            text.putString(pos.getPosX() * 2 + 1, pos.getPosY() + 1, String.valueOf(c));
         }
     }
 }
