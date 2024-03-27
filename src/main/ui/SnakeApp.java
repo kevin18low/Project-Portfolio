@@ -31,8 +31,6 @@
 //public class SnakeApp extends JFrame {
 //    private static final int TICKS_PER_SECOND = 10;
 //
-//    private JTabbedPane sidebar;
-//
 //    public static final int GAME_TAB_INDEX = 0;
 //    public static final int PLAYER_TAB_INDEX = 1;
 //    public static final int SCORE_TAB_INDEX = 2;
@@ -60,14 +58,6 @@
 //        jsonWriter = new JsonWriter(JSON_STORE);
 //        jsonReader = new JsonReader(JSON_STORE);
 //        run();
-//
-//        sidebar = new JTabbedPane();
-//        sidebar.setTabPlacement(JTabbedPane.LEFT);
-//
-//        loadTabs();
-//        add(sidebar);
-//
-//        setVisible(true);
 //    }
 //
 //    // EFFECTS: runs program

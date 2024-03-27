@@ -37,7 +37,7 @@ public class PlayerTab extends Tab {
     //MODIFIES: this
     //EFFECTS: adds a generate report button that prints app status when clicked
     private void placePlayersButton() {
-        JButton b1 = new JButton("Button");
+        JButton b1 = new JButton("You");
         JPanel buttonRow = formatButtonRow(b1);
         buttonRow.setSize(WIDTH, HEIGHT / 6);
 
@@ -46,7 +46,7 @@ public class PlayerTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 //getController().getGame().toString();
-                if (buttonPressed.equals("Button")) {
+                if (buttonPressed.equals("You")) {
                     String message = PLAYER_LIST;
                     playerMessage.setText(message);
 //                    playerText.setText(getController().getGame().toString());

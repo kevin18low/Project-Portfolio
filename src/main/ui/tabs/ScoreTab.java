@@ -35,7 +35,7 @@ public class ScoreTab extends Tab {
     //MODIFIES: this
     //EFFECTS: adds a generate report button that prints app status when clicked
     private void placeScoreButton() {
-        JButton b1 = new JButton("Button");
+        JButton b1 = new JButton("You (If you're on the leaderboard!)");
         JPanel buttonRow = formatButtonRow(b1);
         buttonRow.setSize(WIDTH, HEIGHT / 6);
 
@@ -44,7 +44,7 @@ public class ScoreTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
 //                getController().getGame().getScore();
-                if (buttonPressed.equals("Button")) {
+                if (buttonPressed.equals("You (If you're on the leaderboard!)")) {
                     scoreMessage.setText(SCORE_LIST);
 //                    scoreText.setText(String.valueOf(getController().getGame().getScore()));
                     scoreText.setText("pressed");

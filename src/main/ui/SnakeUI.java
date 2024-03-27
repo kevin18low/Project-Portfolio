@@ -24,8 +24,6 @@ public class SnakeUI extends JFrame {
         sidebar = new JTabbedPane();
         sidebar.setTabPlacement(JTabbedPane.LEFT);
 
-        //game = new Game(5, 5, new Snake(new Direction(1), 1, 1, 5, "blue"), 10, new Food(1,1));
-
         loadTabs();
         add(sidebar);
 

@@ -5,18 +5,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class GameTab extends Tab implements ActionListener {
 
-    private static final String INIT_GAME = "Are you a new or returning player?";
+    private static final String INIT_GAME = "Welcome to Snake! \n Are you a new or returning player?";
     private JLabel gameIntro;
-    private JLabel resultLabel;
-    private JButton newPlayer;
-    private JButton returning;
-    private JButton players;
+    private JButton newPlayer = new JButton("New player");
+    private JButton returning = new JButton("Returning player");
+    private JButton players = new JButton("Player list");
+    private JButton enter = new JButton("Enter");
     private JButton start = new JButton("Start game");
     private JButton home = new JButton("Return home");
-    private JTextField text;
+    private JTextField userInput;
     private CardLayout cardLayout;
     private JPanel introPanel = createIntroPanel();
     private JPanel profilePanel = createProfilePanel();
@@ -28,7 +29,6 @@ public class GameTab extends Tab implements ActionListener {
         cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        placeIntroButtons(introPanel);
         initButtonListeners();
 
         this.add(introPanel, "intro");
@@ -42,8 +42,11 @@ public class GameTab extends Tab implements ActionListener {
 
     private JPanel createIntroPanel() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 3));
-        placeIntro(panel);
+        panel.setLayout(new GridLayout(3, 1));
+        gameIntro = new JLabel(INIT_GAME, JLabel.CENTER);
+        gameIntro.setSize(WIDTH, HEIGHT / 3);
+        panel.add(gameIntro);
+        placeIntroButtons(panel);
 
         return panel;
     }
@@ -51,43 +54,45 @@ public class GameTab extends Tab implements ActionListener {
     private JPanel createProfilePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        Label profile = new Label("Profile");
+
+        JLabel profile = new JLabel("Profile", JLabel.LEFT);
+        profile.setSize(WIDTH, HEIGHT / 2);
         profile.setBounds(10, 10, 100, 40);
         panel.add(profile);
+
         start.setBounds(390, 10, 100, 20);
         panel.add(start);
 
-        text = new JTextField();
-        text.setBounds(10, 50, 250, 20);
-        panel.add(text);
+        Label enterName = new Label("Enter your player name:");
+        enterName.setBounds(10, 50, 130, 20);
+        panel.add(enterName);
+
+        userInput = new JTextField();
+        userInput.setBounds(150, 50, 150, 20);
+        panel.add(userInput);
+
+        enter.setBounds(310, 50, 70, 20);
+        panel.add(enter);
+
         return panel;
     }
 
     private JPanel createGamePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        Label game = new Label("Game");
+
+        JLabel game = new JLabel("Game", JLabel.LEFT);
+        game.setSize(WIDTH, HEIGHT / 2);
         game.setBounds(10, 10, 100, 20);
         panel.add(game);
+
         home.setBounds(10, 30, 120, 20);
         panel.add(home);
         return panel;
     }
 
-    private void placeIntro(JPanel panel) {
-        gameIntro = new JLabel(INIT_GAME, JLabel.CENTER);
-        gameIntro.setSize(WIDTH, HEIGHT / 3);
-        panel.add(gameIntro);
-    }
-
     //EFFECTS: creates Arrive and Leave buttons that change greeting message when clicked
     private void placeIntroButtons(JPanel buttons) {
-        newPlayer = new JButton("New player");
-        returning = new JButton("Returning player");
-        players = new JButton("Player list");
-        resultLabel = new JLabel("");
-        resultLabel.setBounds(20, 100, 250, 20);
-        this.add(resultLabel);
 
         JPanel buttonRow = formatButtonRow(newPlayer);
         buttonRow.add(returning);
@@ -104,10 +109,12 @@ public class GameTab extends Tab implements ActionListener {
         home.addActionListener(this);
         start.addActionListener(this);
         players.addActionListener(this);
+        enter.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String input = userInput.getText();
         if (e.getSource() == newPlayer) {
             cardLayout.show(this, "profile");
 //            String inputValue = JOptionPane.showInputDialog("Please input a value:");
@@ -125,6 +132,8 @@ public class GameTab extends Tab implements ActionListener {
             cardLayout.show(this, "game");
         } else if (e.getSource() == players) {
             getController().getTabbedPane().setSelectedIndex(SnakeUI.PLAYER_TAB_INDEX);
+        } else if (e.getSource() == enter) {
+            System.out.println(input);
         }
     }
 
