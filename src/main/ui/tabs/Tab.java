@@ -4,6 +4,8 @@ import ui.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public abstract class Tab extends JPanel {
     private final SnakeUI controller;

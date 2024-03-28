@@ -82,12 +82,23 @@ public class JsonReader {
         int y = jsonObject.getInt("Y");
         int score = jsonObject.getInt("Score");
 
+        List<Integer> scores = makeScores(p, jsonObject);
+
         List<Position> body = makeBody(p, jsonObject);
         Position head = makeHead(p, jsonObject);
         Food f = new Food(x, y);
 //        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score, f);
         Game g = new Game(width, height, new Snake(new Direction(d), head, body, length, c), score, f);
         p.setGame(g);
+        p.setScores(scores);
+    }
+
+    public List<Integer> makeScores(Player p, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("Scores");
+        for (Object json : jsonArray) {
+            p.addScore((int) json);
+        }
+        return p.getScores();
     }
 
     public List<Position> makeBody(Player p, JSONObject jsonObject) {

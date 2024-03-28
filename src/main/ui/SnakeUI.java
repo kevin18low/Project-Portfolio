@@ -5,6 +5,8 @@ import ui.tabs.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class SnakeUI extends JFrame {
     public static final int GAME_TAB_INDEX = 0;
@@ -16,9 +18,10 @@ public class SnakeUI extends JFrame {
     private JTabbedPane sidebar;
     private Game game;
 
-    public SnakeUI() {
+    public SnakeUI() throws MalformedURLException {
         super("Snake Game Console");
         setSize(WIDTH, HEIGHT);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         sidebar = new JTabbedPane();

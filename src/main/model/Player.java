@@ -76,6 +76,10 @@ public class Player implements Writable {
         return scores;
     }
 
+    public void setScores(List<Integer> scores) {
+        this.scores = scores;
+    }
+
     public Game getGame() {
         return this.game;
     }
