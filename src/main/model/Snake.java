@@ -41,33 +41,6 @@ public class Snake {
     // MODIFIES: this
     // EFFECTS: change direction according to key pressed
     //          if not a possible turn, nothing happens
-    public void turn(KeyStroke ks) {
-        if (validTurn(ks)) {
-            direction.setDirection(keyDirection(ks));
-        }
-    }
-
-    //EFFECTS: returns true if the turn is possible based on te current direction
-    public boolean validTurn(KeyStroke ks) {
-        return !(abs(keyDirection(ks)) == abs(direction.getDirection()));
-    }
-
-    // EFFECTS: return direction according to inputted key
-    public int keyDirection(KeyStroke ks) {
-        switch (ks.getKeyType()) {
-            case ArrowUp:
-                return 2;
-            case ArrowDown:
-                return -2;
-            case ArrowRight:
-                return 1;
-            case ArrowLeft:
-                return -1;
-
-        }
-        return direction.getDirection();
-    }
-
     public void turn(KeyEvent ke) {
         if (validTurn(ke)) {
             direction.setDirection(keyDirection(ke));
@@ -94,23 +67,6 @@ public class Snake {
         }
         return direction.getDirection();
     }
-
-
-    // MODIFIES: this, Food f
-    // EFFECTS: returns true if snake has eaten food
-    //          adds 1 to snakeLength and changes Food f eaten to true;
-    public boolean ateFood(Food f) {
-        if (head.getPosX() == f.getFoodX() && head.getPosY() == f.getFoodY()) {
-            snakeLength++;
-            f.setEaten(true);
-            return true;
-        }
-        return false;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: entire snake position changes. Head moves, and all body parts
-
 
     //*************** getters and setters **************
     public Position getHead() {

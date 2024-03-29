@@ -31,22 +31,15 @@ public class GameTab extends Tab implements ActionListener {
     private JButton submit = new JButton("Go!");
 
     private JTextField userName;
-    private JTextField boardWidth;
-    private JTextField boardHeight;
+    private JTextField boardSize;
     private JTextField snakeColor;
 
     private CardLayout cardLayout;
     private JPanel introPanel = createIntroPanel();
     private JPanel profilePanel = createProfilePanel();
-    private JPanel gamePanel = createGamePanel();
 
     private DocumentListener documentListener;
-
-    private static final int TICKS_PER_SECOND = 10;
-    private Player player;
     private String name;
-
-    private Game game;
 
     private ImageIcon snakeImage;
 
@@ -60,7 +53,6 @@ public class GameTab extends Tab implements ActionListener {
         initButtonListeners();
 
         this.add(introPanel, "intro");
-        this.add(gamePanel, "game");
         this.add(profilePanel, "profile");
 
         cardLayout.show(this, "intro");
@@ -87,7 +79,7 @@ public class GameTab extends Tab implements ActionListener {
             snakeImage = new ImageIcon(new URL(
                     "https://preview.redd.it/q6tds1behfm21.jpg?auto=webp&s=85478b618609bb1657e8f60a053c8051e5c1ebcd"));
         } catch (MalformedURLException e) {
-            // no thanks
+            e.printStackTrace();
         }
         JLabel img = new JLabel(snakeImage);
         img.setBounds(0, 0, 500, 600);
@@ -116,21 +108,6 @@ public class GameTab extends Tab implements ActionListener {
         userName.setBounds(10, 80, 120, 20);
         panel.add(userName);
         placeIntroButtons(panel);
-        return panel;
-    }
-
-    // EFFECTS: creates screen where game will be played
-    private JPanel createGamePanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-
-        JLabel game = new JLabel("Game", JLabel.LEFT);
-        game.setSize(WIDTH, HEIGHT / 2);
-        game.setBounds(10, 10, 100, 20);
-        panel.add(game);
-
-        home.setBounds(10, 30, 120, 20);
-        panel.add(home);
         return panel;
     }
 
@@ -171,7 +148,6 @@ public class GameTab extends Tab implements ActionListener {
             homePressed();
         } else if (e.getSource() == start) {
             startPressed();
-//            cardLayout.show(this, "game");
         } else if (e.getSource() == players) {
             getController().getTabbedPane().setSelectedIndex(SnakeUI.PLAYER_TAB_INDEX);
         } else if (e.getSource() == newGame) {
@@ -192,7 +168,8 @@ public class GameTab extends Tab implements ActionListener {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, "pink"));
+        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, snakeColor.getText()));
+        snakeGame.setTileSize(Integer.parseInt(this.boardSize.getText()));
         frame.add(snakeGame);
         frame.pack();
         snakeGame.requestFocus();
@@ -223,33 +200,26 @@ public class GameTab extends Tab implements ActionListener {
 
     // EFFECTS: sets up all labels for new game prompts
     public void newGameLabels() {
-        Label width = new Label("Enter board width:");
+        Label width = new Label("Enter board size:");
         width.setBounds(10, 100, 120, 30);
-        Label height = new Label("Enter board height:");
-        height.setBounds(10, 130, 120, 30);
         Label color = new Label("Enter snake colour:");
-        color.setBounds(10, 160, 120, 30);
+        color.setBounds(10, 130, 120, 30);
         submit.setBounds(210, 200, 70, 30);
         profilePanel.add(width);
-        profilePanel.add(height);
         profilePanel.add(color);
         profilePanel.add(submit);
     }
 
     // EFFECTS: sets up all text fields for new game prompts
     public void newGameTextFields() {
-        boardWidth = new JTextField();
-        boardWidth.setBounds(130, 100, 150, 20);
-        boardHeight = new JTextField();
-        boardHeight.setBounds(130, 130, 150, 20);
+        boardSize = new JTextField();
+        boardSize.setBounds(130, 100, 150, 20);
         snakeColor = new JTextField();
-        snakeColor.setBounds(130, 160, 150, 20);
-        profilePanel.add(boardWidth);
-        profilePanel.add(boardHeight);
+        snakeColor.setBounds(130, 130, 150, 20);
+        profilePanel.add(boardSize);
         profilePanel.add(snakeColor);
         checkFieldsFilled();
-        boardWidth.getDocument().addDocumentListener(documentListener);
-        boardHeight.getDocument().addDocumentListener(documentListener);
+        boardSize.getDocument().addDocumentListener(documentListener);
         snakeColor.getDocument().addDocumentListener(documentListener);
     }
 
@@ -276,7 +246,7 @@ public class GameTab extends Tab implements ActionListener {
 
             private void updateButtonState() {
                 // Check if both text fields are filled
-                submit.setEnabled(!boardHeight.getText().isEmpty() && !boardWidth.getText().isEmpty()
+                submit.setEnabled(!boardSize.getText().isEmpty()
                         && !snakeColor.getText().isEmpty());
             }
         };
@@ -418,8 +388,8 @@ public class GameTab extends Tab implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
                     String buttonPressed = e.getActionCommand();
                     if (buttonPressed.equals("Go!")) {
-                        Game g = new Game(Integer.parseInt(boardWidth.getText()),
-                                Integer.parseInt(boardHeight.getText()), snakeColor.getText());
+                        Game g = new Game(Integer.parseInt(boardSize.getText()),
+                                Integer.parseInt(boardSize.getText()), snakeColor.getText());
                         jsonPlayer.put("Game", g.toString());
                         pb.getPlayerProfile(name).setGame(g);
                         savePlayerBase();

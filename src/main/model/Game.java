@@ -18,7 +18,7 @@ public class Game {
     private Snake snake;
     private int score;
 
-    private Food food;
+    private Position food;
 
     private boolean paused;
     private boolean gameOver;
@@ -34,7 +34,7 @@ public class Game {
     }
 
     // Constructor for saving games in progress
-    public Game(int width, int height, Snake s, int score, Food f) {
+    public Game(int width, int height, Snake s, int score, Position f) {
         this.boardWidth = width;
         this.boardHeight = height;
         this.snake = s;
@@ -150,7 +150,7 @@ public class Game {
         return score;
     }
 
-    public Food getFood() {
+    public Position getFood() {
         return food;
     }
 }

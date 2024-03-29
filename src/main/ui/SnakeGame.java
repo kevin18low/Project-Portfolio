@@ -60,7 +60,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        //Grid Lines
         for (int i = 0; i < boardWidth / tileSize; i++) {
             //(x1, y1, x2, y2)
             g.drawLine(i * tileSize, 0, i * tileSize, boardHeight);
@@ -108,6 +107,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 || snakeHead.getPosY() * tileSize > boardHeight) { //passed top border or bottom border
             gameOver = true;
         }
+    }
+
+    public void setTileSize(int size) {
+        this.tileSize = size;
     }
 
     @Override

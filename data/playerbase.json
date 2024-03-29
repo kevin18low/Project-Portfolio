@@ -1,13 +1,19 @@
 {"Players": [
     {
         "Head": {
-            "x": 1,
-            "y": 1
+            "x": 3,
+            "y": 3
         },
         "Score": 0,
         "Length": 1,
         "Color": "pink",
         "Scores": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             10,
@@ -16,8 +22,8 @@
         ],
         "X": 0,
         "Y": 0,
-        "Height": 12,
-        "Width": 3,
+        "Height": 50,
+        "Width": 50,
         "Direction": 1,
         "Body": [],
         "Name": "kevin"
@@ -31,6 +37,12 @@
         "Length": 1,
         "Color": "green",
         "Scores": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0
         ],
@@ -52,6 +64,12 @@
         "Color": "black",
         "Scores": [
             0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0
         ],
         "X": 0,
@@ -61,5 +79,28 @@
         "Direction": 1,
         "Body": [],
         "Name": "bob"
+    },
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Length": 1,
+        "Color": "pink",
+        "Scores": [
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "X": 0,
+        "Y": 0,
+        "Height": 80,
+        "Width": 30,
+        "Direction": 1,
+        "Body": [],
+        "Name": "joe"
     }
 ]}

@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SnakeTest {
     private Snake s1;
     private Snake s2;
-    private Food f1;
-    private Food f2;
-    private Food f3;
     private KeyStroke right;
     private KeyStroke left;
     private KeyStroke up;
@@ -23,9 +20,6 @@ public class SnakeTest {
     public void setup() {
         s1 = new Snake(new Direction(1), 50, 50, 1,"green");
         s2 = new Snake(new Direction(-2), 15, 70, 10, "blue");
-        f1 = new Food(50, 50);
-        f2 = new Food(15, 45);
-        f3 = new Food(95, 70);
         right = new KeyStroke(KeyType.ArrowRight);
         left = new KeyStroke(KeyType.ArrowLeft);
         up = new KeyStroke(KeyType.ArrowUp);
