@@ -5,9 +5,9 @@ import ui.tabs.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 
+// Credit: SmartHome
+// Represents a SnakeUI class that runs the snake program
 public class SnakeUI extends JFrame {
     public static final int GAME_TAB_INDEX = 0;
     public static final int PLAYER_TAB_INDEX = 1;
@@ -18,6 +18,7 @@ public class SnakeUI extends JFrame {
     private JTabbedPane sidebar;
     private Game game;
 
+    // EFFECTS: create a new instance of the snake game
     public SnakeUI() {
         super("Snake Game Console");
         setSize(WIDTH, HEIGHT);
@@ -33,6 +34,8 @@ public class SnakeUI extends JFrame {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds side tabs to the main panel
     private void loadTabs() {
         JPanel gameTab = new GameTab(this);
         JPanel playerTab = new PlayerTab(this);

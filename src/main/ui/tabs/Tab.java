@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+// Represents all tabs that are a part of the main panel
 public abstract class Tab extends JPanel {
     private final SnakeUI controller;
 
@@ -20,7 +21,8 @@ public abstract class Tab extends JPanel {
     protected JsonWriter jsonWriter;
     protected PlayerBase pb;
 
-    //REQUIRES: SmartHomeUI controller that holds this tab
+    // Credit: SmartHome
+    //REQUIRES: SnakeUI controller that holds this tab
     public Tab(SnakeUI controller) {
         this.controller = controller;
         pb = new PlayerBase();

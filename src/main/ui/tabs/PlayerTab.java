@@ -10,12 +10,9 @@ import model.*;
 
 import java.util.*;
 
+// Represents the tab that shows the list of all existing players
 public class PlayerTab extends Tab {
     private static final String PLAYER_LIST = "List of all existing players:";
-
-    private JScrollPane playerPane;
-    private JTextArea playerText;
-    private JLabel playerMessage;
 
     private Border border;
     private GridLayout rows;
@@ -25,8 +22,9 @@ public class PlayerTab extends Tab {
     private static final int BOTTOM = 5;
     private static final int HEIGHT = 50;
 
-    //REQUIRES: SmartHomeUI controller that holds this tab
-    //EFFECTS: creates report tab with buttons and application status functionality
+    // Credit: SmartHome
+    //REQUIRES: SnakeUI controller that holds this tab
+    //EFFECTS: creates player tab with buttons
     public PlayerTab(SnakeUI controller) {
         super(controller);
         initialize();
@@ -35,6 +33,8 @@ public class PlayerTab extends Tab {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays screen with list of players
     public void initialize() {
         border = BorderFactory.createEmptyBorder(0, LEFT, BOTTOM, 0);
         rows = new GridLayout(1, 2);
@@ -54,6 +54,8 @@ public class PlayerTab extends Tab {
         this.add(headers);
     }
 
+    // MODIFIES: this
+    // EFFECTS: refreshes the screen to add any new players
     public void updatePlayers(ArrayList<Player> players) {
         removeAll();
         initialize();
@@ -64,6 +66,8 @@ public class PlayerTab extends Tab {
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays given player on screen
     public JPanel displayPlayer(Player p) {
         JPanel row = new JPanel(rows);
         row.setPreferredSize(new Dimension(SnakeUI.WIDTH, HEIGHT));

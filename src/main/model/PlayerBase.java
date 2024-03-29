@@ -37,10 +37,14 @@ public class PlayerBase implements Writable {
         return null;
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes player from playerbase
     public void removePlayer(Player p) {
         players.remove(p);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sorts players alphabetically
     public void sortAlphabetically(List<Player> playerList) {
         Collections.sort(playerList, new Comparator<Player>() {
             @Override

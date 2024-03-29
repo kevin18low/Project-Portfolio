@@ -10,7 +10,6 @@ import java.util.List;
 // Represents a player of the snake game. Each player has a player name,
 // a list of their high scores, and a game that they're playing
 
-
 public class Player implements Writable {
     private String name;
     private List<Integer> scores;
@@ -30,6 +29,7 @@ public class Player implements Writable {
         scores.add(score);
     }
 
+    // EFFECTS: creates a string of the player's scores
     public String scoresToString() {
         String scoreString = "";
         for (Integer i : scores) {
@@ -58,10 +58,12 @@ public class Player implements Writable {
         return json;
     }
 
+    // EFFECTS: puts the head of the snake to JSON
     public JSONObject headToJson() {
         return game.getSnake().getHead().toJson();
     }
 
+    // EFFECTS: puts the body of the snake to JSON
     public JSONArray bodyToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Position p : game.getSnake().getBody()) {

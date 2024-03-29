@@ -2,11 +2,8 @@ package ui.tabs;
 
 import model.Game;
 import model.Player;
-import model.PlayerBase;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 import ui.*;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -14,12 +11,11 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Scanner;
 
+// Represents the game tab that holds all info related to the game and game setup
 public class GameTab extends Tab implements ActionListener {
 
     private static final String INIT_GAME = "Welcome to Snake!";
@@ -34,7 +30,7 @@ public class GameTab extends Tab implements ActionListener {
     private JButton loadGame = new JButton("Load Game");
     private JButton submit = new JButton("Go!");
 
-    private JTextField userInput;
+    private JTextField userName;
     private JTextField boardWidth;
     private JTextField boardHeight;
     private JTextField snakeColor;
@@ -47,7 +43,6 @@ public class GameTab extends Tab implements ActionListener {
     private DocumentListener documentListener;
 
     private static final int TICKS_PER_SECOND = 10;
-    private Scanner input;
     private Player player;
     private String name;
 
@@ -55,7 +50,8 @@ public class GameTab extends Tab implements ActionListener {
 
     private ImageIcon snakeImage;
 
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+    // Credit: SmartHome
+    //EFFECTS: constructs a game tab for console
     public GameTab(SnakeUI controller) {
         super(controller);
         cardLayout = new CardLayout();
@@ -70,10 +66,9 @@ public class GameTab extends Tab implements ActionListener {
         cardLayout.show(this, "intro");
 
         controller.add(this);
-
-        input = new Scanner(System.in);
     }
 
+    // EFFECTS: creates the screen shown when the program runs
     private JPanel createIntroPanel() {
         JPanel panel = new JPanel();
 //        panel.setLayout(new GridLayout(3, 3));
@@ -103,6 +98,7 @@ public class GameTab extends Tab implements ActionListener {
         return panel;
     }
 
+    // EFFECTS: creates screen that shows the player's info
     private JPanel createProfilePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -118,13 +114,14 @@ public class GameTab extends Tab implements ActionListener {
         enterName.setBounds(10, 50, 400, 20);
         panel.add(enterName);
 
-        userInput = new JTextField();
-        userInput.setBounds(10, 80, 120, 20);
-        panel.add(userInput);
+        userName = new JTextField();
+        userName.setBounds(10, 80, 120, 20);
+        panel.add(userName);
         placeIntroButtons(panel);
         return panel;
     }
 
+    // EFFECTS: creates screen where game will be played
     private JPanel createGamePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -139,15 +136,18 @@ public class GameTab extends Tab implements ActionListener {
         return panel;
     }
 
-    //EFFECTS: creates Arrive and Leave buttons that change greeting message when clicked
+    //EFFECTS: creates New and Returning buttons for players
     private void placeIntroButtons(JPanel buttons) {
         JPanel buttonRow = formatButtonRow(newPlayer);
         buttonRow.add(returning);
         buttonRow.setSize(WIDTH, HEIGHT / 6);
         buttonRow.setBounds(150, 70, 250, 60);
         buttons.add(buttonRow);
+        checkNameFilled();
+        userName.getDocument().addDocumentListener(documentListener);
     }
 
+    // EFFECTS: initializes action listeners for all buttons
     private void initButtonListeners() {
         newPlayer.addActionListener(this);
         returning.addActionListener(this);
@@ -157,12 +157,12 @@ public class GameTab extends Tab implements ActionListener {
         begin.addActionListener(this);
         newGame.addActionListener(this);
         loadGame.addActionListener(this);
-//        submit.addActionListener(this);
     }
 
+    // EFFECTS: describes behaviour of each button when pressed
     @Override
     public void actionPerformed(ActionEvent e) {
-        name = userInput.getText();
+        name = userName.getText();
         if (e.getSource() == begin) {
             cardLayout.show(this, "profile");
         } else if (e.getSource() == newPlayer) {
@@ -184,12 +184,16 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: shows the home card
     public void homePressed() {
         cardLayout.show(this, "intro");
         newPlayer.setVisible(true);
         returning.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up screen to prompt for new game dimensions
     public void newGamePressed() {
         profilePanel.removeAll();
         profilePanel.revalidate();
@@ -203,6 +207,7 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // EFFECTS: sets up all labels for new game prompts
     public void newGameLabels() {
         Label width = new Label("Enter board width:");
         width.setBounds(10, 100, 120, 30);
@@ -217,6 +222,7 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(submit);
     }
 
+    // EFFECTS: sets up all text fields for new game prompts
     public void newGameTextFields() {
         boardWidth = new JTextField();
         boardWidth.setBounds(130, 100, 150, 20);
@@ -233,8 +239,11 @@ public class GameTab extends Tab implements ActionListener {
         snakeColor.getDocument().addDocumentListener(documentListener);
     }
 
+    // EFFECTS: keeps submit button off until all fields are filled
     public void checkFieldsFilled() {
         submit.setEnabled(false);
+        newPlayer.setEnabled(false);
+        returning.setEnabled(false);
         documentListener = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -259,6 +268,35 @@ public class GameTab extends Tab implements ActionListener {
         };
     }
 
+    // EFFECTS: makes sure the user enters a player name
+    public void checkNameFilled() {
+        newPlayer.setEnabled(false);
+        returning.setEnabled(false);
+        documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            private void updateButtonState() {
+                newPlayer.setEnabled(!userName.getText().isEmpty());
+                returning.setEnabled(!userName.getText().isEmpty());
+            }
+        };
+    }
+
+    // MODIFIES: this
+    // EFFECTS: re-displays the main profile screen
     public void bringBackProfile() {
         profilePanel.removeAll();
         this.add(createProfilePanel(), "profile");
@@ -269,25 +307,13 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.repaint();
     }
 
+    // EFFECTS: loads in game with player's saved data
     public void loadGamePressed() {
         try {
             getGameData(name, true);
         } catch (Exception exception) {
             // well
         }
-    }
-
-    // EFFECTS: returns game with given snake colour and board dimensions
-    public Game initGame() {
-        System.out.println("Pick your snake colour: ");
-        String color = input.nextLine();
-        System.out.println("How wide do you want the board to be?");
-        int width = input.nextInt();
-        System.out.println("How tall do you want the board to be?");
-        int height = input.nextInt();
-        Game game = new Game(width, height, color);
-        System.out.println("Starting game with " + width + " x " + height + " board!");
-        return game;
     }
 
     // EFFECTS: prints out player name and their past high scores for an existing player
@@ -319,9 +345,9 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(playGames);
     }
 
-//     Credit: JsonSerializationDemo
-//     MODIFIES: this
-//     EFFECTS: processes user input
+    // Credit: JsonSerializationDemo
+    // MODIFIES: this, pb
+    // EFFECTS: processes user input
     public void processInput(boolean isNew) {
         if (!isNew) {
             try {
@@ -338,7 +364,7 @@ public class GameTab extends Tab implements ActionListener {
                 savePlayerBase();
             } else {
                 System.out.println("name in use");
-                userInput.setText(null);
+                userName.setText(null);
                 return;
             }
         }
@@ -347,6 +373,7 @@ public class GameTab extends Tab implements ActionListener {
         newOrLoad(isNew);
     }
 
+    // EFFECTS: new players can only play new games. Returning players can play a new game or load an old game.
     public void newOrLoad(boolean isNew) {
         JPanel buttonRow = formatButtonRow(newGame);
         if (!isNew) {
@@ -357,6 +384,7 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(buttonRow);
     }
 
+    // EFFECTS: starts old game if load is pressed, prompts new game if new is pressed
     public void newGameLoadGame(Boolean load, JSONObject jsonPlayer) {
         if (!load) {
             submit.addActionListener(new ActionListener() {
@@ -379,6 +407,7 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // EFFECTS: shows the stats of the game being loaded
     public void showGameData(String name) {
         Label gameData = new Label(pb.getPlayerProfile(name).getGame().toString());
         gameData.setBounds(150,300,500,30);
@@ -391,7 +420,6 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
-    // MODIFIES: player
     // EFFECTS: start a new game, or load game from player's profile
     public void getGameData(String name, Boolean load) throws IOException {
         JSONObject jsonObject = new JSONObject(jsonReader.readFile(JSON_STORE));
@@ -406,8 +434,8 @@ public class GameTab extends Tab implements ActionListener {
     }
 
     // Credit: JsonSerializationDemo
-    // MODIFIES: this
-    // EFFECTS: prompt user for name and adds to PlayerBase
+    // MODIFIES: pb
+    // EFFECTS: adds player with given name to PlayerBase
     private void addPlayer(String name) {
         pb.addPlayer(new Player(name));
         displayNewProfile(pb.getPlayerProfile(name));
