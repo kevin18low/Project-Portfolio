@@ -84,7 +84,7 @@ public class JsonReader {
 
         List<Integer> scores = makeScores(p, jsonObject);
 
-        List<Position> body = makeBody(p, jsonObject);
+        ArrayList<Position> body = makeBody(p, jsonObject);
         Position head = makeHead(jsonObject);
         Food f = new Food(x, y);
 //        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score, f);
@@ -93,6 +93,7 @@ public class JsonReader {
         p.setScores(scores);
     }
 
+    // EFFECTS: parses JSON into a list of integers for the scores
     public List<Integer> makeScores(Player p, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Scores");
         for (Object json : jsonArray) {
@@ -101,7 +102,8 @@ public class JsonReader {
         return p.getScores();
     }
 
-    public List<Position> makeBody(Player p, JSONObject jsonObject) {
+    // EFFECTS: parses JSON into a position list for the body
+    public ArrayList<Position> makeBody(Player p, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Body");
         for (Object json : jsonArray) {
             JSONObject nextPos = (JSONObject) json;
@@ -110,6 +112,7 @@ public class JsonReader {
         return p.getGame().getSnake().getBody();
     }
 
+    // EFFECTS: adds one segment of the body to the rest of the body
     public void addBody(Player p, JSONObject jsonObject) {
         int x = jsonObject.getInt("x");
         int y = jsonObject.getInt("y");
@@ -117,6 +120,7 @@ public class JsonReader {
         p.getGame().getSnake().getBody().add(pos);
     }
 
+    // EFFECTS: parses JSON into a position object for the head
     public Position makeHead(JSONObject jsonObject) {
         JSONObject head = (JSONObject) jsonObject.get("Head");
         int x = head.getInt("x");

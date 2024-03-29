@@ -4,6 +4,7 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
 import java.lang.Math.*;
+import java.util.Random;
 
 // Represents the game board with a width and height, and boolean values indicating
 // whether the game has been paused or is over
@@ -12,13 +13,12 @@ import java.lang.Math.*;
 public class Game {
     private int boardWidth;
     private int boardHeight;
+    private int tileSize = 25;
 
     private Snake snake;
     private int score;
 
     private Food food;
-    private int randX = (int)(10 * Math.random());
-    private int randY = (int)(10 * Math.random());
 
     private boolean paused;
     private boolean gameOver;
@@ -29,9 +29,8 @@ public class Game {
         this.boardHeight = height;
         this.paused = false;
         this.gameOver = false;
-        this.snake = new Snake(new Direction(1), 1, 1, 1, color);
-        score = 0;
-        this.food = new Food(randX, randY);
+        this.snake = new Snake(new Direction(1), 3, 3, 1, color);
+        this.score = 0;
     }
 
     // Constructor for saving games in progress
@@ -51,11 +50,52 @@ public class Game {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: game changes after clock tick. Snake moves in current direction
-    public void tick() {
-        snake.move();
+    public void moveSnake(Position food, Random random) {
+        if (collision(getSnake().getHead(), food)) {
+            getSnake().getBody().add(new Position(food.getPosX(), food.getPosY()));
+            placeFood(food, random, boardWidth, boardHeight, tileSize);
+        }
 
+        //move snake body
+        for (int i = getSnake().getBody().size() - 1; i >= 0; i--) {
+            Position snakePart = getSnake().getBody().get(i);
+            if (i == 0) { //right before the head
+                snakePart.setPosX(getSnake().getHead().getPosX());
+                snakePart.setPosY(getSnake().getHead().getPosY());
+            } else {
+                Position prevSnakePart = getSnake().getBody().get(i - 1);
+                snakePart.setPosX(prevSnakePart.getPosX());
+                snakePart.setPosY(prevSnakePart.getPosY());
+            }
+        }
+        //move snake head
+        getSnake().getHead().setPosX(getSnake().getHead().getPosX() + getSnake().getDx());
+        getSnake().getHead().setPosY(getSnake().getHead().getPosY() + getSnake().getDy());
+
+        //game over conditions
+        for (int i = 0; i < getSnake().getBody().size(); i++) {
+            Position snakePart = getSnake().getBody().get(i);
+
+            //collide with snake head
+            if (collision(getSnake().getHead(), snakePart)) {
+                gameOver = true;
+            }
+        }
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: eat food. Length, score, and body length increase by 1
+    public void placeFood(Position food, Random random, int boardWidth, int boardHeight, int tileSize) {
+        if (collision(getSnake().getHead(), food)) {
+            getSnake().getBody().add(new Position(food.getPosX(), food.getPosY()));
+            food.setPosX(random.nextInt(boardWidth / tileSize));
+            food.setPosY(random.nextInt(boardHeight / tileSize));
+        }
+    }
+
+    public boolean collision(Position p1, Position p2) {
+        return p1.getPosX() == p2.getPosX() && p1.getPosY() == p2.getPosY();
     }
 
     // EFFECTS: convert game to string

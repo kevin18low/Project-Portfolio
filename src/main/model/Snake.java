@@ -2,7 +2,10 @@ package model;
 
 import com.googlecode.lanterna.input.KeyStroke;
 
+import java.awt.event.KeyEvent;
 import java.util.*;
+import java.awt.Color;
+import java.lang.reflect.Field;
 
 import static java.lang.Math.abs;
 
@@ -12,7 +15,7 @@ public class Snake {
     private Direction direction;
     private int snakeLength;
     private Position head;
-    private List<Position> body;
+    private ArrayList<Position> body;
     private int snakeX;
     private int snakeY;
     private String color;
@@ -21,15 +24,13 @@ public class Snake {
     public Snake(Direction direction, int x, int y, int length, String c) {
         this.direction = direction;
         this.snakeLength = length;
-//        this.snakeX = x;
-//        this.snakeY = y;
         this.head = new Position(x, y);
         this.body = new ArrayList<>();
         this.color = c;
     }
 
     // Constructor for saving snake in progress
-    public Snake(Direction direction, Position head, List<Position> body, int length, String c) {
+    public Snake(Direction direction, Position head, ArrayList<Position> body, int length, String c) {
         this.direction = direction;
         this.snakeLength = length;
         this.head = head;
@@ -67,6 +68,33 @@ public class Snake {
         return direction.getDirection();
     }
 
+    public void turn(KeyEvent ke) {
+        if (validTurn(ke)) {
+            direction.setDirection(keyDirection(ke));
+        }
+    }
+
+    //EFFECTS: returns true if the turn is possible based on te current direction
+    public boolean validTurn(KeyEvent ke) {
+        return !(abs(keyDirection(ke)) == abs(direction.getDirection()));
+    }
+
+    // EFFECTS: return direction according to inputted key
+    public int keyDirection(KeyEvent ke) {
+        switch (ke.getKeyCode()) {
+            case KeyEvent.VK_UP:
+                return -2;
+            case KeyEvent.VK_DOWN:
+                return 2;
+            case KeyEvent.VK_RIGHT:
+                return 1;
+            case KeyEvent.VK_LEFT:
+                return -1;
+
+        }
+        return direction.getDirection();
+    }
+
 
     // MODIFIES: this, Food f
     // EFFECTS: returns true if snake has eaten food
@@ -82,31 +110,14 @@ public class Snake {
 
     // MODIFIES: this
     // EFFECTS: entire snake position changes. Head moves, and all body parts
-    public void move() {
-        if (body.size() > 0) {
-            body.remove(body.size() - 1);
-        }
-        body.add(0, head);
-        if (direction.getDx() == 0) {
-            head.setPosY(head.getPosY() + direction.getDy());
-        } else {
-            head.setPosX(head.getPosX() + direction.getDx());
-        }
 
-    }
-
-    // MODIFIES: this
-    // EFFECTS: eat food. Length, score, and body length increase by 1
-    public void eatFood() {
-        // eat
-    }
 
     //*************** getters and setters **************
     public Position getHead() {
         return head;
     }
 
-    public List<Position> getBody() {
+    public ArrayList<Position> getBody() {
         return body;
     }
 
@@ -152,5 +163,15 @@ public class Snake {
 
     public String getColor() {
         return color;
+    }
+
+    public Color getColorByName() {
+        try {
+            Field field = Color.class.getField(color);
+            return (Color) field.get(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

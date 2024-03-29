@@ -29,7 +29,7 @@ public class Direction {
     // EFFECTS: gets dy based on current direction
     public int findDy(int direction) {
         if (abs(direction) == 2) {
-            return direction / (abs(direction));
+            return direction / 2;
         } else {
             return 0;
         }

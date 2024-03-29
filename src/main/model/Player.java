@@ -33,7 +33,7 @@ public class Player implements Writable {
     public String scoresToString() {
         String scoreString = "";
         for (Integer i : scores) {
-            scoreString += (", " + i);
+            scoreString += (i + ", ");
         }
         return scoreString;
     }

@@ -71,10 +71,8 @@ public class GameTab extends Tab implements ActionListener {
     // EFFECTS: creates the screen shown when the program runs
     private JPanel createIntroPanel() {
         JPanel panel = new JPanel();
-//        panel.setLayout(new GridLayout(3, 3));
         panel.setLayout(null);
         gameIntro = new JLabel(INIT_GAME, JLabel.CENTER);
-//        gameIntro.setSize(WIDTH, HEIGHT / 3);
         gameIntro.setBounds(150, 0, 200, 100);
         panel.add(gameIntro);
         JPanel buttonRow = formatButtonRow(begin);
@@ -172,16 +170,32 @@ public class GameTab extends Tab implements ActionListener {
         } else if (e.getSource() == home) {
             homePressed();
         } else if (e.getSource() == start) {
-            cardLayout.show(this, "game");
+            startPressed();
+//            cardLayout.show(this, "game");
         } else if (e.getSource() == players) {
             getController().getTabbedPane().setSelectedIndex(SnakeUI.PLAYER_TAB_INDEX);
         } else if (e.getSource() == newGame) {
             newGamePressed();
         } else if (e.getSource() == loadGame) {
             loadGamePressed();
-//        } else if (e.getSource() == submit) {
-//            submitPressed();
         }
+    }
+
+    public void startPressed() {
+        int boardWidth = 600;
+        int boardHeight = boardWidth;
+
+        JFrame frame = new JFrame("Snake");
+        frame.setVisible(true);
+        frame.setSize(boardWidth, boardHeight);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, "pink"));
+        frame.add(snakeGame);
+        frame.pack();
+        snakeGame.requestFocus();
     }
 
     // MODIFIES: this
@@ -357,7 +371,6 @@ public class GameTab extends Tab implements ActionListener {
                 nullPlayer.setBounds(10, 120,  300, 30);
                 profilePanel.add(nullPlayer);
             }
-//            return pb.getPlayerProfile(name);
         } else if (isNew) {
             if (pb.getPlayerProfile(name) == null) {
                 addPlayer(name);
@@ -382,6 +395,19 @@ public class GameTab extends Tab implements ActionListener {
         buttonRow.setSize(WIDTH, HEIGHT / 6);
         buttonRow.setBounds(100, 10, 250, 60);
         profilePanel.add(buttonRow);
+    }
+
+    // EFFECTS: start a new game, or load game from player's profile
+    public void getGameData(String name, Boolean load) throws IOException {
+        JSONObject jsonObject = new JSONObject(jsonReader.readFile(JSON_STORE));
+        JSONArray jsonArray = jsonObject.getJSONArray("Players");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonPlayer = jsonArray.getJSONObject(i);
+            if (jsonPlayer.get("Name").equals(name)) {
+                newGameLoadGame(load, jsonPlayer);
+                break;
+            }
+        }
     }
 
     // EFFECTS: starts old game if load is pressed, prompts new game if new is pressed
@@ -410,26 +436,13 @@ public class GameTab extends Tab implements ActionListener {
     // EFFECTS: shows the stats of the game being loaded
     public void showGameData(String name) {
         Label gameData = new Label(pb.getPlayerProfile(name).getGame().toString());
-        gameData.setBounds(150,300,500,30);
+        gameData.setBounds(160,360,500,30);
         profilePanel.add(gameData);
-        //buggy
+        profilePanel.repaint();
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             // no
-        }
-    }
-
-    // EFFECTS: start a new game, or load game from player's profile
-    public void getGameData(String name, Boolean load) throws IOException {
-        JSONObject jsonObject = new JSONObject(jsonReader.readFile(JSON_STORE));
-        JSONArray jsonArray = jsonObject.getJSONArray("Players");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonPlayer = jsonArray.getJSONObject(i);
-            if (jsonPlayer.get("Name").equals(name)) {
-                newGameLoadGame(load, jsonPlayer);
-                break;
-            }
         }
     }
 
