@@ -18,7 +18,7 @@ public class SnakeUI extends JFrame {
     private JTabbedPane sidebar;
     private Game game;
 
-    public SnakeUI() throws MalformedURLException {
+    public SnakeUI() {
         super("Snake Game Console");
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);

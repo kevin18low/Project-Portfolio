@@ -30,6 +30,14 @@ public class Player implements Writable {
         scores.add(score);
     }
 
+    public String scoresToString() {
+        String scoreString = "";
+        for (Integer i : scores) {
+            scoreString += (", " + i);
+        }
+        return scoreString;
+    }
+
     // EFFECTS: put in JSON
     // Credit: JSonSerializationDemo
     @Override

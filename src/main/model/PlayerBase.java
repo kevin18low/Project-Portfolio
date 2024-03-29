@@ -5,12 +5,14 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // Represents all players that have played the game
 
 public class PlayerBase implements Writable {
-    private List<Player> players;
+    private ArrayList<Player> players;
 
     // Make a PlayerBase with an empty list of players
     public PlayerBase() {
@@ -35,6 +37,19 @@ public class PlayerBase implements Writable {
         return null;
     }
 
+    public void removePlayer(Player p) {
+        players.remove(p);
+    }
+
+    public void sortAlphabetically(List<Player> playerList) {
+        Collections.sort(playerList, new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+    }
+
     // EFFECTS: put in JSON
     // Credit: JSonSerializationDemo
     @Override
@@ -56,7 +71,7 @@ public class PlayerBase implements Writable {
 
     //*************** getters and setters **************
 
-    public List<Player> getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 }

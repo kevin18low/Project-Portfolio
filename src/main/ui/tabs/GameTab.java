@@ -44,20 +44,16 @@ public class GameTab extends Tab implements ActionListener {
     private JPanel profilePanel = createProfilePanel();
     private JPanel gamePanel = createGamePanel();
 
+    private DocumentListener documentListener;
+
     private static final int TICKS_PER_SECOND = 10;
-    private static final String JSON_STORE = "./data/playerbase.json";
-    private JsonReader jsonReader;
-    private JsonWriter jsonWriter;
     private Scanner input;
-    private PlayerBase pb;
     private Player player;
     private String name;
 
     private Game game;
 
     private ImageIcon snakeImage;
-
-    private DocumentListener documentListener;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public GameTab(SnakeUI controller) {
@@ -76,9 +72,6 @@ public class GameTab extends Tab implements ActionListener {
         controller.add(this);
 
         input = new Scanner(System.in);
-        pb = new PlayerBase();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
     }
 
     private JPanel createIntroPanel() {
@@ -330,7 +323,6 @@ public class GameTab extends Tab implements ActionListener {
 //     MODIFIES: this
 //     EFFECTS: processes user input
     public void processInput(boolean isNew) {
-        loadPlayerBase();
         if (!isNew) {
             try {
                 displayExistingProfile(pb.getPlayerProfile(name));
@@ -415,34 +407,9 @@ public class GameTab extends Tab implements ActionListener {
 
     // Credit: JsonSerializationDemo
     // MODIFIES: this
-    // EFFECTS: loads PlayerBase from file
-    private void loadPlayerBase()  {
-        try {
-            pb = jsonReader.read();
-            System.out.println("Loaded PlayerBase from " + JSON_STORE + "\n");
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
-        }
-    }
-
-    // Credit: JsonSerializationDemo
-    // MODIFIES: this
     // EFFECTS: prompt user for name and adds to PlayerBase
     private void addPlayer(String name) {
         pb.addPlayer(new Player(name));
         displayNewProfile(pb.getPlayerProfile(name));
-    }
-
-    // Credit: JsonSerializationDemo
-    // EFFECTS: saves the PlayerBase to file
-    private void savePlayerBase() {
-        try {
-            jsonWriter.open();
-            jsonWriter.write(pb);
-            jsonWriter.close();
-            System.out.println("Saved PlayerBase to " + JSON_STORE + "\n");
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
-        }
     }
 }
