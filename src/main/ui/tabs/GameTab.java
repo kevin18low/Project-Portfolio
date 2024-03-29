@@ -9,11 +9,11 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.*;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -53,12 +53,11 @@ public class GameTab extends Tab implements ActionListener {
     private Player player;
     private String name;
 
-    private Border border;
-    private GridLayout layout;
-
     private Game game;
 
     private ImageIcon snakeImage;
+
+    private DocumentListener documentListener;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public GameTab(SnakeUI controller) {
@@ -165,7 +164,7 @@ public class GameTab extends Tab implements ActionListener {
         begin.addActionListener(this);
         newGame.addActionListener(this);
         loadGame.addActionListener(this);
-        submit.addActionListener(this);
+//        submit.addActionListener(this);
     }
 
     @Override
@@ -187,8 +186,8 @@ public class GameTab extends Tab implements ActionListener {
             newGamePressed();
         } else if (e.getSource() == loadGame) {
             loadGamePressed();
-        } else if (e.getSource() == submit) {
-            bringBackProfile();
+//        } else if (e.getSource() == submit) {
+//            submitPressed();
         }
     }
 
@@ -204,12 +203,11 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.repaint();
         newGameLabels();
         newGameTextFields();
-//        try {
-//            getGameData(name, false);
-//        } catch (Exception exception) {
-//            // well
-////        }
-//        initializeLayout();
+        try {
+            getGameData(name, false);
+        } catch (Exception exception) {
+            // well
+        }
     }
 
     public void newGameLabels() {
@@ -236,11 +234,43 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(boardWidth);
         profilePanel.add(boardHeight);
         profilePanel.add(snakeColor);
+        checkFieldsFilled();
+        boardWidth.getDocument().addDocumentListener(documentListener);
+        boardHeight.getDocument().addDocumentListener(documentListener);
+        snakeColor.getDocument().addDocumentListener(documentListener);
+    }
+
+    public void checkFieldsFilled() {
+        submit.setEnabled(false);
+        documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateButtonState();
+            }
+
+            private void updateButtonState() {
+                // Check if both text fields are filled
+                submit.setEnabled(!boardHeight.getText().isEmpty() && !boardWidth.getText().isEmpty()
+                        && !snakeColor.getText().isEmpty());
+            }
+        };
     }
 
     public void bringBackProfile() {
         profilePanel.removeAll();
         this.add(createProfilePanel(), "profile");
+        newPlayer.setVisible(true);
+        returning.setVisible(true);
         cardLayout.show(this, "profile");
         profilePanel.revalidate();
         profilePanel.repaint();
@@ -311,12 +341,15 @@ public class GameTab extends Tab implements ActionListener {
             }
 //            return pb.getPlayerProfile(name);
         } else if (isNew) {
-            addPlayer(name);
-            savePlayerBase();
-//            return pb.getPlayerProfile(name);
+            if (pb.getPlayerProfile(name) == null) {
+                addPlayer(name);
+                savePlayerBase();
+            } else {
+                System.out.println("name in use");
+                userInput.setText(null);
+                return;
+            }
         }
-        // should not reach here
-//        return null;
         newPlayer.setVisible(false);
         returning.setVisible(false);
         newOrLoad(isNew);
@@ -332,6 +365,40 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(buttonRow);
     }
 
+    public void newGameLoadGame(Boolean load, JSONObject jsonPlayer) {
+        if (!load) {
+            submit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String buttonPressed = e.getActionCommand();
+                    if (buttonPressed.equals("Go!")) {
+                        Game g = new Game(Integer.parseInt(boardWidth.getText()),
+                                Integer.parseInt(boardHeight.getText()), snakeColor.getText());
+                        jsonPlayer.put("Game", g.toString());
+                        pb.getPlayerProfile(name).setGame(g);
+                        savePlayerBase();
+                        bringBackProfile();
+                    }
+                }
+            });
+        } else if (load) {
+            showGameData(name);
+            bringBackProfile();
+        }
+    }
+
+    public void showGameData(String name) {
+        Label gameData = new Label(pb.getPlayerProfile(name).getGame().toString());
+        gameData.setBounds(150,300,500,30);
+        profilePanel.add(gameData);
+        //buggy
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            // no
+        }
+    }
+
     // MODIFIES: player
     // EFFECTS: start a new game, or load game from player's profile
     public void getGameData(String name, Boolean load) throws IOException {
@@ -339,17 +406,8 @@ public class GameTab extends Tab implements ActionListener {
         JSONArray jsonArray = jsonObject.getJSONArray("Players");
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonPlayer = jsonArray.getJSONObject(i);
-            if (!load) {
-                if (jsonPlayer.get("Name").equals(name)) {
-                    Game g = new Game(Integer.parseInt(boardWidth.getText()),
-                            Integer.parseInt(boardHeight.getText()), snakeColor.getText());
-                    jsonPlayer.put("Game", g.toString());
-                    player.setGame(g);
-                    break;
-                }
-            } else if (load) {
-                System.out.println("Loading game... get ready!");
-                System.out.println(player.getGame().toString());
+            if (jsonPlayer.get("Name").equals(name)) {
+                newGameLoadGame(load, jsonPlayer);
                 break;
             }
         }

@@ -60,12 +60,11 @@ public class Game {
 
     // EFFECTS: convert game to string
     public String toString() {
-        return "Current game: "
-                + "Board of width " + boardWidth
-                + ", height of " + boardHeight
-                + ", snake of length " + snake.getSnakeLength()
-                + " with direction " + snake.getDirection()
-                + ", head position (" + snake.getSnakeX() + ", "
+        return "Board width: " + boardWidth
+                + ", height: " + boardHeight
+                + ", snake length: " + snake.getSnakeLength()
+                + ", direction: " + snake.getDirection()
+                + ", head position: (" + snake.getSnakeX() + ", "
                 + snake.getSnakeY() + ")";
     }
 
