@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,16 @@ public class PlayerTest {
     public void setup() {
         p1 = new Player("p1");
         g1 = new Game("black", 25);
+    }
+
+    @Test
+    public void bodyToJsonTest() {
+        p1.setGame(g1);
+        g1.getSnake().getBody().add(new Position(1,1));
+        g1.getSnake().getBody().add(new Position(2,1));
+        assertEquals(p1.bodyToJson().length(), 2);
+        g1.getSnake().getBody().add(new Position(3,1));
+        assertEquals(p1.bodyToJson().length(), 3);
     }
 
     @Test
