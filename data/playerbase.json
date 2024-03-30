@@ -95,5 +95,24 @@
             "x": 10,
             "y": 10
         }
+    },
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Color": "green",
+        "Tile Size": 25,
+        "Scores": [4],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "bob",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     }
 ]}

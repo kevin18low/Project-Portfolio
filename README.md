@@ -40,3 +40,38 @@ game and also make some customizations to make it more interesting.
 - StackOverflow
 - Oracle documentation
 - Oracle Swing tutorials
+- YouTube: KennyYipCoding
+
+**Instructions for grader**
+- Run main
+- Pressing 'player list' will bring you to the tab of players (X) in the playerbase (Y). This can also
+- be done by clicking on the 'players' tab on the left.
+- In the players tab, you can sort the players alphabetically by clicking the sort button.
+- You can also remove players. You click 'remove' next to the player, and then click save. Clicking refresh will
+- show the newe playerbase with the player removed. The player only gets removed if you click save.
+- Pressing start from the home screen will lead you to the game setup. If you were on the players tab, click the
+- 'game' tab to return to the starting screen.
+- Press start
+- Type in your desired username. You can check the player list to see if your name is in use.
+**New player instructions**
+- If you are a new player, click 'New Player' once you've typed your name.
+- If you are a new player, you will obviously only be able to start a new game.
+- Once you click 'New Game,' enter the desired tile size and snake color. Note: a bigger tile size means bigger tiles
+- and a smaller game board. Note: make sure to enter a java recognized color. Some colors like 'purple' are not
+- actually Color objects
+- Press 'Go!' once you've filled out the fields. Press 'Start game' to start the game.
+**Returning player instructions**
+- If you are already in the player base, type your name and click 'Returning Player'.
+- You have the choice to load a saved game or start or a new one.
+- To start a new one, follow the steps mentioned above.
+- To load a saved game, press 'Load Game'. Your game data will be displayed brielfy at the bottom of the screen.
+- Press 'Start game' in the top right. Be careful, your game starts right away.
+**Game saving**
+- At any point during the game, you can click 'Save' at the top of the screen to save your current game data.
+- Pausing the game first and then saving is recommended.
+- At any time, click 'Pause' to pause and unpause the game.
+- Once your game is saved, you may close the game and your game data will be saved. You may also continue playing,
+- but note that if you lose your saved game will reset.
+- If you continue to play after saving, you can pause at any time and close the window. Your old saved game will
+- still be there.
+- Note: at any point, if you lose the game, the game will end and your save file will be reset to a default game.

@@ -9,21 +9,20 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
+// Credit: YouTube- KennyYipCoding
+// Runs a game of snake
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private int boardWidth = 600;
     private int boardHeight = boardWidth;
     private int tileSize;
 
-    //snake
     private Position snakeHead;
     private ArrayList<Position> snakeBody;
 
-    //food
     private Position food;
     private Random random;
 
-    //game logic
     private int velocityX;
     private int velocityY;
     private Timer gameLoop;
@@ -34,6 +33,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private JButton save = new JButton("Save Game");
     private JButton pause = new JButton("Pause");
 
+    // Create a snake game with given game for given player
     public SnakeGame(Game game, Player player, Tab tab) {
         this.game = game;
         this.player = player;
@@ -60,6 +60,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         gameLoop.start();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds save and pause buttons to game screen
     public void addButtons() {
         save.addActionListener(new ActionListener() {
             @Override
@@ -86,6 +88,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         add(pause);
     }
 
+    // MODIFIES: game
+    // EFFECTS: pauses game
     public void togglePause() {
         game.setPaused(!game.isPaused());
         if (game.isPaused()) {
@@ -98,19 +102,22 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: draw game
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
     }
 
+    // MODIFIES: this
+    // EFFECTS: add colours to elements
     public void draw(Graphics g) {
         for (int i = 0; i < boardWidth / tileSize; i++) {
-            //(x1, y1, x2, y2)
             g.drawLine(i * tileSize, 0, i * tileSize, boardHeight);
             g.drawLine(0, i * tileSize, boardWidth, i * tileSize);
         }
 
-        //Food
+        // food
         g.setColor(Color.red);
         g.fill3DRect(food.getPosX() * tileSize, food.getPosY() * tileSize, tileSize, tileSize, true);
 
@@ -137,19 +144,23 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: move the snake
     public void move() {
         game.moveSnake(food, random);
 
         if (snakeHead.getPosX() * tileSize < 0
-                || snakeHead.getPosX() * tileSize >= boardWidth //passed left border or right border
+                || snakeHead.getPosX() * tileSize >= boardWidth // passed left border or right border
                 || snakeHead.getPosY() * tileSize < 0
-                || snakeHead.getPosY() * tileSize >= boardHeight) { //passed top border or bottom border
+                || snakeHead.getPosY() * tileSize >= boardHeight) { // passed top border or bottom border
             game.setGameOver(true);
         }
     }
 
+    // MODIFIES: game
+    // EFFECTS: behaviour of button presses
     @Override
-    public void actionPerformed(ActionEvent e) { //called every x milliseconds by gameLoop timer
+    public void actionPerformed(ActionEvent e) {
         move();
         repaint();
         if (game.isGameOver()) {
@@ -161,6 +172,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    // MODIFIES: game
+    // EFFECTS: turns snake when keys are pressed
     @Override
     public void keyPressed(KeyEvent e) {
         game.getSnake().turn(e);
