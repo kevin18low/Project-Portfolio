@@ -160,7 +160,7 @@ public class SnakeTest {
             assertEquals(s1.getColorByName(), Color.GREEN);
             assertEquals(s2.getColorByName(), Color.BLUE);
         } catch (Exception e) {
-            // expected
+            fail("Should not have thrown exception");
         }
     }
 }
