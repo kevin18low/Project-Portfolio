@@ -84,7 +84,8 @@ public class JsonReader {
         ArrayList<Position> body = makeBody(p, jsonObject);
         Position head = makeHead(jsonObject);
         Position food = makeFood(jsonObject);
-        Game g = new Game(width, height, new Snake(new Direction(d), head, body, c), score, food);
+        int tileSize = jsonObject.getInt("Tile Size");
+        Game g = new Game(width, height, new Snake(new Direction(d), head, body, c), score, food, tileSize);
         p.setGame(g);
         p.setScores(scores);
     }

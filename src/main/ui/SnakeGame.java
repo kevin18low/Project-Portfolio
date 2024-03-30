@@ -11,9 +11,9 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
-    private int boardWidth;
-    private int boardHeight;
-    private int tileSize = 25;
+    private int boardWidth = 600;
+    private int boardHeight = boardWidth;
+    private int tileSize;
 
     //snake
     private Position snakeHead;
@@ -38,8 +38,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         this.game = game;
         this.player = player;
         this.tab = tab;
-        this.boardWidth = game.getBoardWidth();
-        this.boardHeight = game.getBoardHeight();
+        this.tileSize = game.getTileSize();
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.black);
         addKeyListener(this);
@@ -49,10 +48,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snakeHead = game.getSnake().getHead();
         snakeBody = game.getSnake().getBody();
 
-//        food = new Position(10, 10);
         food = game.getFood();
         random = new Random();
-        game.placeFood(food, random, boardWidth, boardHeight, tileSize);
+        game.placeFood(food, random, tileSize);
 
         velocityX = game.getSnake().getDx();
         velocityY = game.getSnake().getDy();
@@ -69,6 +67,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals("Save Game")) {
                     player.setGame(game);
+                    game.setScore();
+                    game.setFood(food);
                     tab.savePlayerBase();
                 }
             }
@@ -159,6 +159,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if (game.isGameOver()) {
             game.setScore();
             player.addScore(game.getScore());
+            player.setGame(new Game("green", 25));
             tab.savePlayerBase();
             gameLoop.stop();
         }
@@ -169,7 +170,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         game.getSnake().turn(e);
     }
 
-    //not needed
+    // not needed
     @Override
     public void keyTyped(KeyEvent e) {
     }

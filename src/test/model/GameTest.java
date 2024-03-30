@@ -13,7 +13,7 @@ public class GameTest {
 
     @BeforeEach
     public void setup() {
-        g1 = new Game(8, 8, "green");
+        g1 = new Game("green", 25);
         s1 = g1.getSnake();
         ks = new KeyStroke(KeyType.Tab);
     }

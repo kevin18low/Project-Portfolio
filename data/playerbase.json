@@ -1,25 +1,78 @@
-{"Players": [{
-    "Head": {
-        "x": 3,
-        "y": 3
+{"Players": [
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Color": "green",
+        "Tile Size": 25,
+        "Scores": [
+            4,
+            1,
+            10,
+            10,
+            4
+        ],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "kevin",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     },
-    "Score": 0,
-    "Length": 0,
-    "Color": "blue",
-    "Scores": [
-        0,
-        0,
-        4,
-        4,
-        4
-    ],
-    "Height": 30,
-    "Width": 30,
-    "Direction": 1,
-    "Body": [],
-    "Name": "kevin",
-    "Food": {
-        "x": 10,
-        "y": 10
+    {
+        "Head": {
+            "x": 3,
+            "y": 4
+        },
+        "Score": 3,
+        "Color": "blue",
+        "Tile Size": 25,
+        "Scores": [1],
+        "Height": 600,
+        "Width": 600,
+        "Direction": -1,
+        "Body": [
+            {
+                "x": 4,
+                "y": 4
+            },
+            {
+                "x": 5,
+                "y": 4
+            },
+            {
+                "x": 6,
+                "y": 4
+            }
+        ],
+        "Name": "joe",
+        "Food": {
+            "x": 9,
+            "y": 6
+        }
+    },
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Color": "pink",
+        "Tile Size": 30,
+        "Scores": [2],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "jeff",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     }
-}]}
+]}

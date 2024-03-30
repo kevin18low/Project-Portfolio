@@ -13,7 +13,7 @@ public class PlayerTest {
     @BeforeEach
     public void setup() {
         p1 = new Player("p1");
-        g1 = new Game(10,10, "black");
+        g1 = new Game("black", 25);
     }
 
     @Test

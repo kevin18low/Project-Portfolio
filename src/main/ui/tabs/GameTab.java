@@ -1,7 +1,6 @@
 package ui.tabs;
 
-import model.Game;
-import model.Player;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ui.*;
@@ -44,7 +43,7 @@ public class GameTab extends Tab implements ActionListener {
     private ImageIcon snakeImage;
 
     private Player player;
-    private boolean load;
+    private Game playerGame;
 
     // Credit: SmartHome
     //EFFECTS: constructs a game tab for console
@@ -102,6 +101,7 @@ public class GameTab extends Tab implements ActionListener {
 
         start.setBounds(390, 10, 100, 20);
         panel.add(start);
+        start.setEnabled(false);
 
         Label enterName = new Label("Enter your player name, then select if you're a new or returning player:");
         enterName.setBounds(10, 50, 400, 20);
@@ -161,12 +161,10 @@ public class GameTab extends Tab implements ActionListener {
     }
 
     public void startPressed() {
-        int boardWidth = 600;
-        int boardHeight = boardWidth;
 
         JFrame frame = new JFrame("Snake");
         frame.setVisible(true);
-        frame.setSize(boardWidth, boardHeight);
+        frame.setSize(playerGame.getBoardWidth(), playerGame.getBoardHeight());
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,15 +172,7 @@ public class GameTab extends Tab implements ActionListener {
         JButton save = new JButton("Save game");
         save.setBounds(50, 10, 100, 20);
         frame.add(save);
-        Game playerGame;
-        if (load) {
-            playerGame = pb.getPlayerProfile(name).getGame();
-//            bringBackProfile();
-        } else {
-            playerGame = new Game(boardWidth, boardHeight, snakeColor.getText());
-        }
         SnakeGame snakeGame = new SnakeGame(playerGame, player, this);
-        snakeGame.setTileSize(Integer.parseInt(this.boardSize.getText()));
         frame.add(snakeGame);
         frame.pack();
 
@@ -199,18 +189,18 @@ public class GameTab extends Tab implements ActionListener {
 
     // EFFECTS: loads in game with player's saved data
     public void loadGamePressed() {
-        load = true;
+        start.setEnabled(true);
         try {
             getGameData(name, true);
         } catch (Exception exception) {
-            // well
+            exception.printStackTrace();
         }
+        playerGame = pb.getPlayerProfile(name).getGame();
     }
 
     // MODIFIES: this
     // EFFECTS: sets up screen to prompt for new game dimensions
     public void newGamePressed() {
-        load = false;
         profilePanel.removeAll();
         profilePanel.revalidate();
         profilePanel.repaint();
@@ -219,13 +209,13 @@ public class GameTab extends Tab implements ActionListener {
         try {
             getGameData(name, false);
         } catch (Exception exception) {
-            // well
+            exception.printStackTrace();
         }
     }
 
     // EFFECTS: sets up all labels for new game prompts
     public void newGameLabels() {
-        Label width = new Label("Enter board size:");
+        Label width = new Label("Enter tile size:");
         width.setBounds(10, 100, 120, 30);
         Label color = new Label("Enter snake colour:");
         color.setBounds(10, 130, 120, 30);
@@ -314,6 +304,7 @@ public class GameTab extends Tab implements ActionListener {
         cardLayout.show(this, "profile");
         profilePanel.revalidate();
         profilePanel.repaint();
+        start.setEnabled(true);
     }
 
     // EFFECTS: prints out player name and their past high scores for an existing player
@@ -405,10 +396,10 @@ public class GameTab extends Tab implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
                     String buttonPressed = e.getActionCommand();
                     if (buttonPressed.equals("Go!")) {
-                        Game g = new Game(Integer.parseInt(boardSize.getText()),
-                                Integer.parseInt(boardSize.getText()), snakeColor.getText());
+                        Game g = new Game(snakeColor.getText(), Integer.parseInt(boardSize.getText()));
                         jsonPlayer.put("Game", g.toString());
                         pb.getPlayerProfile(name).setGame(g);
+                        playerGame = new Game(snakeColor.getText(), Integer.parseInt(boardSize.getText()));
                         savePlayerBase();
                         bringBackProfile();
                     }
@@ -416,7 +407,6 @@ public class GameTab extends Tab implements ActionListener {
             });
         } else if (load) {
             showGameData(name);
-//            bringBackProfile();
         }
     }
 

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Represents a player of the snake game. Each player has a player name,
@@ -14,17 +15,22 @@ public class Player implements Writable {
     private String name;
     private List<Integer> scores;
     private Game game;
+    private static final int CAPACITY = 5;
 
     // Create a player  object with given name and scores
     public Player(String name) {
         this.name = name;
         this.scores = new ArrayList<>();
-        game = new Game(0,0, "black");
+        game = new Game("black", 25);
     }
 
     // MODIFIES: this
     // EFFECTS: add given score to player's score list
     public void addScore(int score) {
+        if (scores.size() >= CAPACITY) {
+            int minValue = Collections.min(scores);
+            scores.remove(minValue);
+        }
         scores.add(score);
     }
 
@@ -47,12 +53,12 @@ public class Player implements Writable {
         json.put("Width", game.getBoardWidth());
         json.put("Height", game.getBoardHeight());
         json.put("Color", game.getSnake().getColor());
-        json.put("Length", game.getSnake().getSnakeLength());
         json.put("Direction", game.getSnake().getDirection());
         json.put("Food", game.getFood().toJson());
         json.put("Head", headToJson());
         json.put("Body", bodyToJson());
         json.put("Score", game.getScore());
+        json.put("Tile Size", game.getTileSize());
         return json;
     }
 
