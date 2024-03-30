@@ -29,9 +29,8 @@ public class Snake {
     }
 
     // Constructor for saving snake in progress
-    public Snake(Direction direction, Position head, ArrayList<Position> body, int length, String c) {
+    public Snake(Direction direction, Position head, ArrayList<Position> body, String c) {
         this.direction = direction;
-//        this.snakeLength = length;
         this.head = head;
         this.body = body;
         this.color = c;
@@ -86,10 +85,6 @@ public class Snake {
 
     public int getDy() {
         return direction.getDy();
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public int getSnakeLength() {

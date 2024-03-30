@@ -43,7 +43,8 @@ public class GameTab extends Tab implements ActionListener {
 
     private ImageIcon snakeImage;
 
-    Player player;
+    private Player player;
+    private boolean load;
 
     // Credit: SmartHome
     //EFFECTS: constructs a game tab for console
@@ -173,8 +174,14 @@ public class GameTab extends Tab implements ActionListener {
         JButton save = new JButton("Save game");
         save.setBounds(50, 10, 100, 20);
         frame.add(save);
-
-        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, snakeColor.getText()), player, this);
+        Game playerGame;
+        if (load) {
+            playerGame = pb.getPlayerProfile(name).getGame();
+//            bringBackProfile();
+        } else {
+            playerGame = new Game(boardWidth, boardHeight, snakeColor.getText());
+        }
+        SnakeGame snakeGame = new SnakeGame(playerGame, player, this);
         snakeGame.setTileSize(Integer.parseInt(this.boardSize.getText()));
         frame.add(snakeGame);
         frame.pack();
@@ -190,9 +197,20 @@ public class GameTab extends Tab implements ActionListener {
         returning.setVisible(true);
     }
 
+    // EFFECTS: loads in game with player's saved data
+    public void loadGamePressed() {
+        load = true;
+        try {
+            getGameData(name, true);
+        } catch (Exception exception) {
+            // well
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: sets up screen to prompt for new game dimensions
     public void newGamePressed() {
+        load = false;
         profilePanel.removeAll();
         profilePanel.revalidate();
         profilePanel.repaint();
@@ -211,7 +229,7 @@ public class GameTab extends Tab implements ActionListener {
         width.setBounds(10, 100, 120, 30);
         Label color = new Label("Enter snake colour:");
         color.setBounds(10, 130, 120, 30);
-        submit.setBounds(210, 200, 70, 30);
+        submit.setBounds(210, 170, 70, 30);
         profilePanel.add(width);
         profilePanel.add(color);
         profilePanel.add(submit);
@@ -296,15 +314,6 @@ public class GameTab extends Tab implements ActionListener {
         cardLayout.show(this, "profile");
         profilePanel.revalidate();
         profilePanel.repaint();
-    }
-
-    // EFFECTS: loads in game with player's saved data
-    public void loadGamePressed() {
-        try {
-            getGameData(name, true);
-        } catch (Exception exception) {
-            // well
-        }
     }
 
     // EFFECTS: prints out player name and their past high scores for an existing player
@@ -407,7 +416,7 @@ public class GameTab extends Tab implements ActionListener {
             });
         } else if (load) {
             showGameData(name);
-            bringBackProfile();
+//            bringBackProfile();
         }
     }
 

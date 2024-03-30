@@ -11,45 +11,46 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
-    int boardWidth;
-    int boardHeight;
-    int tileSize = 25;
+    private int boardWidth;
+    private int boardHeight;
+    private int tileSize = 25;
 
     //snake
-    Position snakeHead;
-    ArrayList<Position> snakeBody;
+    private Position snakeHead;
+    private ArrayList<Position> snakeBody;
 
     //food
-    Position food;
-    Random random;
+    private Position food;
+    private Random random;
 
     //game logic
-    int velocityX;
-    int velocityY;
-    Timer gameLoop;
+    private int velocityX;
+    private int velocityY;
+    private Timer gameLoop;
 
     private Game game;
     private Player player;
     private Tab tab;
-
-//    private boolean gameOver;
+    private JButton save = new JButton("Save Game");
+    private JButton pause = new JButton("Pause");
 
     public SnakeGame(Game game, Player player, Tab tab) {
         this.game = game;
         this.player = player;
         this.tab = tab;
-//        this.gameOver = game.isGameOver();
         this.boardWidth = game.getBoardWidth();
         this.boardHeight = game.getBoardHeight();
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.black);
         addKeyListener(this);
         setFocusable(true);
+        addButtons();
 
         snakeHead = game.getSnake().getHead();
         snakeBody = game.getSnake().getBody();
 
-        food = new Position(10, 10);
+//        food = new Position(10, 10);
+        food = game.getFood();
         random = new Random();
         game.placeFood(food, random, boardWidth, boardHeight, tileSize);
 
@@ -59,6 +60,42 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         //game timer
         gameLoop = new Timer(100, this);
         gameLoop.start();
+    }
+
+    public void addButtons() {
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Save Game")) {
+                    player.setGame(game);
+                    tab.savePlayerBase();
+                }
+            }
+        });
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String buttonPressed = e.getActionCommand();
+                if (buttonPressed.equals("Pause")) {
+                    togglePause();
+                }
+            }
+        });
+        add(save);
+        add(pause);
+    }
+
+    public void togglePause() {
+        game.setPaused(!game.isPaused());
+        if (game.isPaused()) {
+            gameLoop.stop(); // Pause the game loop
+            pause.setFocusable(true);
+        } else {
+            gameLoop.start(); // Resume the game loop
+            pause.setFocusable(false);
+            requestFocusInWindow();
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -104,9 +141,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         game.moveSnake(food, random);
 
         if (snakeHead.getPosX() * tileSize < 0
-                || snakeHead.getPosX() * tileSize > boardWidth //passed left border or right border
+                || snakeHead.getPosX() * tileSize >= boardWidth //passed left border or right border
                 || snakeHead.getPosY() * tileSize < 0
-                || snakeHead.getPosY() * tileSize > boardHeight) { //passed top border or bottom border
+                || snakeHead.getPosY() * tileSize >= boardHeight) { //passed top border or bottom border
             game.setGameOver(true);
         }
     }

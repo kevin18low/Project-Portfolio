@@ -19,7 +19,6 @@ public class Player implements Writable {
     public Player(String name) {
         this.name = name;
         this.scores = new ArrayList<>();
-        scores.add(0);
         game = new Game(0,0, "black");
     }
 
@@ -50,8 +49,7 @@ public class Player implements Writable {
         json.put("Color", game.getSnake().getColor());
         json.put("Length", game.getSnake().getSnakeLength());
         json.put("Direction", game.getSnake().getDirection());
-        json.put("X", game.getSnake().getSnakeX());
-        json.put("Y", game.getSnake().getSnakeY());
+        json.put("Food", game.getFood().toJson());
         json.put("Head", headToJson());
         json.put("Body", bodyToJson());
         json.put("Score", game.getScore());

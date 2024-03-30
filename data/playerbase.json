@@ -1,64 +1,25 @@
-{"Players": [
-    {
-        "Head": {
-            "x": 3,
-            "y": 3
-        },
-        "Score": 0,
-        "Length": 0,
-        "Color": "blue",
-        "Scores": [
-            0,
-            0,
-            0,
-            0,
-            8,
-            10,
-            6,
-            6,
-            10,
-            8,
-            2,
-            2,
-            2,
-            1
-        ],
-        "X": 0,
-        "Y": 0,
-        "Height": 30,
-        "Width": 30,
-        "Direction": 1,
-        "Body": [],
-        "Name": "kevin"
+{"Players": [{
+    "Head": {
+        "x": 3,
+        "y": 3
     },
-    {
-        "Head": {
-            "x": 1,
-            "y": 1
-        },
-        "Score": 0,
-        "Length": 0,
-        "Color": "green",
-        "Scores": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
-        "X": 0,
-        "Y": 0,
-        "Height": 4,
-        "Width": 4,
-        "Direction": 1,
-        "Body": [],
-        "Name": "jeff"
+    "Score": 0,
+    "Length": 0,
+    "Color": "blue",
+    "Scores": [
+        0,
+        0,
+        4,
+        4,
+        4
+    ],
+    "Height": 30,
+    "Width": 30,
+    "Direction": 1,
+    "Body": [],
+    "Name": "kevin",
+    "Food": {
+        "x": 10,
+        "y": 10
     }
-]}
+}]}

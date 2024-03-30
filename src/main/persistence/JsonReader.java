@@ -75,20 +75,16 @@ public class JsonReader {
         int height = jsonObject.getInt("Height");
 
         String c = jsonObject.getString("Color");
-        int length = jsonObject.getInt("Length");
 
         int d = jsonObject.getInt("Direction");
-        int x = jsonObject.getInt("X");
-        int y = jsonObject.getInt("Y");
         int score = jsonObject.getInt("Score");
 
         List<Integer> scores = makeScores(p, jsonObject);
 
         ArrayList<Position> body = makeBody(p, jsonObject);
         Position head = makeHead(jsonObject);
-        Position f = new Position(x, y);
-//        Game g = new Game(width, height, new Snake(new Direction(d), x, y, length, c), score, f);
-        Game g = new Game(width, height, new Snake(new Direction(d), head, body, length, c), score, f);
+        Position food = makeFood(jsonObject);
+        Game g = new Game(width, height, new Snake(new Direction(d), head, body, c), score, food);
         p.setGame(g);
         p.setScores(scores);
     }
@@ -125,6 +121,15 @@ public class JsonReader {
         JSONObject head = (JSONObject) jsonObject.get("Head");
         int x = head.getInt("x");
         int y = head.getInt("y");
+        Position pos = new Position(x, y);
+        return pos;
+    }
+
+    // EFFECTS: parses JSON into a position object for the food
+    public Position makeFood(JSONObject jsonObject) {
+        JSONObject food = (JSONObject) jsonObject.get("Food");
+        int x = food.getInt("x");
+        int y = food.getInt("y");
         Position pos = new Position(x, y);
         return pos;
     }

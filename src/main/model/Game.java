@@ -30,6 +30,7 @@ public class Game {
         this.paused = false;
         this.gameOver = false;
         this.snake = new Snake(new Direction(1), 3, 3, 1, color);
+        this.food = new Position(10, 10);
         this.score = 0;
     }
 
@@ -87,8 +88,10 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: eat food. Length, score, and body length increase by 1
     public void placeFood(Position food, Random random, int boardWidth, int boardHeight, int tileSize) {
-        food.setPosX(random.nextInt(boardWidth / tileSize));
-        food.setPosY(random.nextInt(boardHeight / tileSize));
+        int maxX = (boardWidth / tileSize) - 4;
+        int maxY = (boardHeight / tileSize) - 4;
+        food.setPosX(random.nextInt(maxX));
+        food.setPosY(random.nextInt(maxY));
     }
 
     public boolean collision(Position p1, Position p2) {
