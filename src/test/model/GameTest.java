@@ -71,7 +71,18 @@ public class GameTest {
     @Test
     public void collisionTest() {
         assertTrue(g1.collision(new Position(1, 1), new Position(1, 1)));
+        assertFalse(g1.collision(new Position(3, 1), new Position(3, 3)));
         assertFalse(g1.collision(new Position(3, 1), new Position(1, 1)));
+        assertFalse(g1.collision(new Position(3, 1), new Position(4, 6)));
+    }
+
+    @Test
+    public void setFoodTest() {
+        assertEquals(g1.getFood().getPosX(), 10);
+        assertEquals(g1.getFood().getPosY(), 10);
+        g1.setFood(new Position(5, 5));
+        assertEquals(g1.getFood().getPosX(), 5);
+        assertEquals(g1.getFood().getPosY(), 5);
     }
 
     @Test

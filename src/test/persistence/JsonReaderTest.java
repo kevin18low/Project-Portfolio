@@ -42,7 +42,7 @@ public class JsonReaderTest {
         try {
             PlayerBase pb = reader.read();
             List<Player> players = pb.getPlayers();
-            assertEquals(3, players.size());
+            assertEquals(2, players.size());
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

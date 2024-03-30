@@ -61,6 +61,17 @@ public class Snake {
         return direction.getDirection();
     }
 
+    // EFFECTS: gets a color object from a string
+    public Color getColorByName() {
+        try {
+            Field field = Color.class.getField(color);
+            return (Color) field.get(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     //*************** getters and setters **************
     public Position getHead() {
         return head;
@@ -96,15 +107,5 @@ public class Snake {
 
     public String getColor() {
         return color;
-    }
-
-    public Color getColorByName() {
-        try {
-            Field field = Color.class.getField(color);
-            return (Color) field.get(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

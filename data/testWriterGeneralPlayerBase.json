@@ -1,38 +1,59 @@
 {"Players": [
     {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
         "Score": 0,
-        "Length": 1,
         "Color": "black",
-        "Scores": [0],
-        "X": 1,
-        "Y": 1,
-        "Height": 0,
-        "Width": 0,
+        "Tile Size": 25,
+        "Scores": [],
+        "Height": 600,
+        "Width": 600,
         "Direction": 1,
-        "Name": "kevin"
+        "Body": [],
+        "Name": "kevin",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     },
     {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
         "Score": 0,
-        "Length": 1,
         "Color": "black",
-        "Scores": [0],
-        "X": 1,
-        "Y": 1,
-        "Height": 0,
-        "Width": 0,
+        "Tile Size": 25,
+        "Scores": [],
+        "Height": 600,
+        "Width": 600,
         "Direction": 1,
-        "Name": "bob"
+        "Body": [],
+        "Name": "bob",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     },
     {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
         "Score": 0,
-        "Length": 1,
         "Color": "black",
-        "Scores": [0],
-        "X": 1,
-        "Y": 1,
-        "Height": 0,
-        "Width": 0,
+        "Tile Size": 25,
+        "Scores": [],
+        "Height": 600,
+        "Width": 600,
         "Direction": 1,
-        "Name": "john"
+        "Body": [],
+        "Name": "john",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
     }
 ]}
