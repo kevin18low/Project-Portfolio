@@ -38,10 +38,6 @@ public abstract class Tab extends JPanel {
         return p;
     }
 
-    public SnakeUI getController() {
-        return controller;
-    }
-
     // Credit: JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads PlayerBase from file
@@ -65,5 +61,9 @@ public abstract class Tab extends JPanel {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
+    }
+
+    public SnakeUI getController() {
+        return controller;
     }
 }

@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
@@ -18,13 +20,37 @@ public class PlayerTest {
 
     @Test
     public void addScoreTest() {
-        assertEquals(p1.getScores().size(), 1);
+        ArrayList<Integer> scores = new ArrayList<>();
         p1.addScore(100);
+        assertEquals(p1.getScores().size(), 1);
+        assertEquals(p1.getScores().get(0), 100);
+        p1.addScore(150);
         assertEquals(p1.getScores().size(), 2);
         assertEquals(p1.getScores().get(1), 100);
-        p1.addScore(150);
-        assertEquals(p1.getScores().size(), 3);
-        assertEquals(p1.getScores().get(2), 150);
+        p1.addScore(10);
+        p1.addScore(20);
+        p1.addScore(5);
+
+        scores.add(150);
+        scores.add(100);
+        scores.add(20);
+        scores.add(10);
+        scores.add(5);
+        assertEquals(p1.getScores(), scores);
+
+        p1.addScore(7);
+        scores.remove(scores.size()-1);
+        scores.add(7);
+        assertEquals(p1.getScores(), scores);
+    }
+
+    @Test
+    public void scoresToStringTest() {
+        p1.addScore(10);
+        p1.addScore(20);
+        p1.addScore(30);
+        String scores = "10, 20, 30, ";
+        assertEquals(p1.scoresToString(), scores);
     }
 
     @Test
@@ -46,3 +72,4 @@ public class PlayerTest {
         assertEquals(p1.getGame(), g1);
     }
 }
+

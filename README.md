@@ -28,7 +28,7 @@ game and also make some customizations to make it more interesting.
 - As a user, I want to be able to see a list of my high scores
 - As a user, I want to be able to pause the game so I can take a break and come back later
 - As a user, I want to customize my snake's colour scheme
-- As a user, I want to choose the size of the board to play on
+- As a user, I want to choose the size of the board tiles
 
 **Phase 2**
 - As a user, I want to have the choice to save my game so I can play again another time
@@ -36,3 +36,7 @@ game and also make some customizations to make it more interesting.
 
 **Citations**
 - JsonSerializationDemo
+- SmartHome
+- StackOverflow
+- Oracle documentation
+- Oracle Swing tutorials

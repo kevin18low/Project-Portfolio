@@ -29,7 +29,7 @@ public class Player implements Writable {
     public void addScore(int score) {
         if (scores.size() >= CAPACITY) {
             int minValue = Collections.min(scores);
-            scores.remove(minValue);
+            scores.remove(Integer.valueOf(minValue));
         }
         scores.add(score);
     }
@@ -49,7 +49,7 @@ public class Player implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Name", name);
-        json.put("Scores", scores);
+        json.put("Scores", getScores());
         json.put("Width", game.getBoardWidth());
         json.put("Height", game.getBoardHeight());
         json.put("Color", game.getSnake().getColor());
@@ -87,6 +87,7 @@ public class Player implements Writable {
     }
 
     public List<Integer> getScores() {
+        Collections.sort(scores, Collections.reverseOrder());
         return scores;
     }
 

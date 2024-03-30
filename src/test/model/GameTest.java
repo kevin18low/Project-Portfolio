@@ -1,54 +1,19 @@
 package model;
 
-import com.googlecode.lanterna.input.KeyType;
-import com.googlecode.lanterna.input.KeyStroke;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class GameTest {
     private Game g1;
     private Snake s1;
-    private KeyStroke ks;
 
     @BeforeEach
     public void setup() {
         g1 = new Game("green", 25);
         s1 = g1.getSnake();
-        ks = new KeyStroke(KeyType.Tab);
-    }
-
-    @Test
-    public void pauseGameTest() {
-        assertFalse(g1.isPaused());
-        g1.pauseGame(new KeyStroke(KeyType.ArrowRight));
-        assertFalse(g1.isPaused());
-        g1.pauseGame(ks);
-        assertTrue(g1.isPaused());
-    }
-
-    @Test
-    public void getBoardWidthTest() {
-        assertEquals(g1.getBoardWidth(), 8);
-    }
-
-    @Test
-    public void setBoardWidthTest() {
-        assertEquals(g1.getBoardWidth(), 8);
-        g1.setBoardWidth(5);
-        assertEquals(g1.getBoardWidth(), 5);
-    }
-
-    @Test
-    public void getBoardHeightTest() {
-        assertEquals(g1.getBoardHeight(), 8);
-    }
-
-    @Test
-    public void setBoardHeightTest() {
-        assertEquals(g1.getBoardHeight(), 8);
-        g1.setBoardHeight(5);
-        assertEquals(g1.getBoardHeight(), 5);
     }
 
     @Test
@@ -88,11 +53,43 @@ public class GameTest {
     }
 
     @Test
+    public void setScoreTest() {
+        assertEquals(g1.getScore(), 0);
+        s1.getBody().add(new Position(1,1));
+        s1.getBody().add(new Position(2,1));
+        g1.setScore();
+        assertEquals(g1.getScore(), 2);
+    }
+
+    @Test
     public void toStringTest() {
-        assertEquals(g1.toString(), "Current game: " +
-                "Board of width 8, height of 8, snake of length 1 with direction 1," +
-                " position (1, 1)");
+        assertEquals(g1.toString(), "Board size: 600, tile size: 25, snake length: 0, direction: 1, " +
+                "head position: (3, 3)");
 
     }
 
+    @Test
+    public void collisionTest() {
+        assertTrue(g1.collision(new Position(1, 1), new Position(1, 1)));
+        assertFalse(g1.collision(new Position(3, 1), new Position(1, 1)));
+    }
+
+    @Test
+    public void placeFoodTest() {
+        assertEquals(g1.getFood().getPosX(), 10);
+        assertEquals(g1.getFood().getPosY(), 10);
+        g1.placeFood(new Random());
+        assertFalse(g1.getFood().getPosY() == 10);
+        assertFalse(g1.getFood().getPosX() == 10);
+    }
+
+    @Test
+    public void moveSnakeTest() {
+        Random random = new Random();
+        assertEquals(g1.getSnake().getSnakeLength(), 0);
+        g1.moveSnake(new Position(3, 3), random);
+        assertEquals(g1.getSnake().getSnakeLength(), 1);
+        g1.moveSnake(new Position(20, 20), random);
+        assertEquals(g1.getSnake().getSnakeLength(), 1);
+    }
 }

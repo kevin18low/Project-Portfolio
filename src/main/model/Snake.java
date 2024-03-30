@@ -1,7 +1,5 @@
 package model;
 
-import com.googlecode.lanterna.input.KeyStroke;
-
 import java.awt.event.KeyEvent;
 import java.util.*;
 import java.awt.Color;
@@ -9,20 +7,17 @@ import java.lang.reflect.Field;
 
 import static java.lang.Math.abs;
 
-// Represents a snake with a current direction, length, x position, y position, and color
+// Represents a snake with a current direction, head, body and color
 
 public class Snake {
     private Direction direction;
     private Position head;
     private ArrayList<Position> body;
-    private int snakeX;
-    private int snakeY;
     private String color;
 
-    // Make a snake object going in given direction at position (x, y) with length and colour c
-    public Snake(Direction direction, int x, int y, int length, String c) {
+    // Make a snake object going in given direction at position (x, y) and colour c
+    public Snake(Direction direction, int x, int y, String c) {
         this.direction = direction;
-//        this.snakeLength = length;
         this.head = new Position(x, y);
         this.body = new ArrayList<>();
         this.color = c;
@@ -92,11 +87,11 @@ public class Snake {
     }
 
     public int getSnakeX() {
-        return snakeX;
+        return head.getPosX();
     }
 
     public int getSnakeY() {
-        return snakeY;
+        return head.getPosY();
     }
 
     public String getColor() {

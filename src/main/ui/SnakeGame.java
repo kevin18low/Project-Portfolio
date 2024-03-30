@@ -50,7 +50,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         food = game.getFood();
         random = new Random();
-        game.placeFood(food, random, tileSize);
+        game.placeFood(random);
 
         velocityX = game.getSnake().getDx();
         velocityY = game.getSnake().getDy();
@@ -131,9 +131,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.white);
         if (game.isGameOver()) {
             g.setColor(Color.red);
-            g.drawString("Game Over! Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+            g.drawString("Game Over! Score: " + snakeBody.size(), tileSize - 16, tileSize);
         } else {
-            g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+            g.drawString("Score: " + snakeBody.size(), tileSize - 16, tileSize);
         }
     }
 
@@ -146,10 +146,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 || snakeHead.getPosY() * tileSize >= boardHeight) { //passed top border or bottom border
             game.setGameOver(true);
         }
-    }
-
-    public void setTileSize(int size) {
-        this.tileSize = size;
     }
 
     @Override

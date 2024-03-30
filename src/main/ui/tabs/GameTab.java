@@ -160,8 +160,8 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // EFFECTS: starts a snake game when start is pressed
     public void startPressed() {
-
         JFrame frame = new JFrame("Snake");
         frame.setVisible(true);
         frame.setSize(playerGame.getBoardWidth(), playerGame.getBoardHeight());
@@ -213,6 +213,7 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // MODIFIES: profilePanel
     // EFFECTS: sets up all labels for new game prompts
     public void newGameLabels() {
         Label width = new Label("Enter tile size:");
@@ -225,6 +226,7 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(submit);
     }
 
+    // MODIFIES: profilePanel
     // EFFECTS: sets up all text fields for new game prompts
     public void newGameTextFields() {
         boardSize = new JTextField();
@@ -238,7 +240,7 @@ public class GameTab extends Tab implements ActionListener {
         snakeColor.getDocument().addDocumentListener(documentListener);
     }
 
-    // EFFECTS: keeps submit button off until all fields are filled
+    // EFFECTS: turns submit button off until all fields are filled
     public void checkFieldsFilled() {
         submit.setEnabled(false);
         newPlayer.setEnabled(false);
@@ -260,7 +262,6 @@ public class GameTab extends Tab implements ActionListener {
             }
 
             private void updateButtonState() {
-                // Check if both text fields are filled
                 submit.setEnabled(!boardSize.getText().isEmpty()
                         && !snakeColor.getText().isEmpty());
             }
@@ -307,6 +308,7 @@ public class GameTab extends Tab implements ActionListener {
         start.setEnabled(true);
     }
 
+    // MODIFIES: profilePanel
     // EFFECTS: prints out player name and their past high scores for an existing player
     public void displayExistingProfile(Player p) throws NullPointerException {
         Label welcome = new Label("Welcome back " + p.getName() + "!");
@@ -315,7 +317,6 @@ public class GameTab extends Tab implements ActionListener {
         Label scores = new Label("Here are your high scores: ");
         scores.setBounds(10, 120, 300, 30);
         profilePanel.add(scores);
-
         int start = 120;
         int counter = 0;
         for (int s : p.getScores()) {
@@ -326,6 +327,7 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // MODIFIES: profilePanel
     // EFFECTS: prints out welcome messages for new player
     public void displayNewProfile(Player p) {
         Label welcome = new Label("Welcome " + p.getName() + "!");
@@ -336,8 +338,7 @@ public class GameTab extends Tab implements ActionListener {
         profilePanel.add(playGames);
     }
 
-    // Credit: JsonSerializationDemo
-    // MODIFIES: this, pb
+    // MODIFIES: profilePanel, pb
     // EFFECTS: processes user input
     public void processInput(boolean isNew) {
         if (!isNew) {
@@ -364,6 +365,7 @@ public class GameTab extends Tab implements ActionListener {
         newOrLoad(isNew);
     }
 
+    // MODIFIES: profilePanel
     // EFFECTS: new players can only play new games. Returning players can play a new game or load an old game.
     public void newOrLoad(boolean isNew) {
         JPanel buttonRow = formatButtonRow(newGame);
@@ -388,6 +390,7 @@ public class GameTab extends Tab implements ActionListener {
         }
     }
 
+    // MODIFIES: pb
     // EFFECTS: starts old game if load is pressed, prompts new game if new is pressed
     public void newGameLoadGame(Boolean load, JSONObject jsonPlayer) {
         if (!load) {
@@ -419,11 +422,10 @@ public class GameTab extends Tab implements ActionListener {
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
-            // no
+            e.printStackTrace();
         }
     }
 
-    // Credit: JsonSerializationDemo
     // MODIFIES: pb
     // EFFECTS: adds player with given name to PlayerBase
     private void addPlayer(String name) {
