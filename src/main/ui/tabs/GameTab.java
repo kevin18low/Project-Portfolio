@@ -43,6 +43,8 @@ public class GameTab extends Tab implements ActionListener {
 
     private ImageIcon snakeImage;
 
+    Player player;
+
     // Credit: SmartHome
     //EFFECTS: constructs a game tab for console
     public GameTab(SnakeUI controller) {
@@ -168,10 +170,15 @@ public class GameTab extends Tab implements ActionListener {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, snakeColor.getText()));
+        JButton save = new JButton("Save game");
+        save.setBounds(50, 10, 100, 20);
+        frame.add(save);
+
+        SnakeGame snakeGame = new SnakeGame(new Game(boardWidth, boardHeight, snakeColor.getText()), player, this);
         snakeGame.setTileSize(Integer.parseInt(this.boardSize.getText()));
         frame.add(snakeGame);
         frame.pack();
+
         snakeGame.requestFocus();
     }
 
@@ -351,6 +358,7 @@ public class GameTab extends Tab implements ActionListener {
                 return;
             }
         }
+        player = pb.getPlayerProfile(name);
         newPlayer.setVisible(false);
         returning.setVisible(false);
         newOrLoad(isNew);

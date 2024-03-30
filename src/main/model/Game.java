@@ -87,11 +87,8 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: eat food. Length, score, and body length increase by 1
     public void placeFood(Position food, Random random, int boardWidth, int boardHeight, int tileSize) {
-        if (collision(getSnake().getHead(), food)) {
-            getSnake().getBody().add(new Position(food.getPosX(), food.getPosY()));
-            food.setPosX(random.nextInt(boardWidth / tileSize));
-            food.setPosY(random.nextInt(boardHeight / tileSize));
-        }
+        food.setPosX(random.nextInt(boardWidth / tileSize));
+        food.setPosY(random.nextInt(boardHeight / tileSize));
     }
 
     public boolean collision(Position p1, Position p2) {
@@ -148,6 +145,10 @@ public class Game {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore() {
+        this.score = snake.getSnakeLength();
     }
 
     public Position getFood() {

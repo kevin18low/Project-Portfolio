@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import ui.tabs.Tab;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -28,10 +29,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     Timer gameLoop;
 
     private Game game;
-    boolean gameOver = false;
+    private Player player;
+    private Tab tab;
 
-    public SnakeGame(Game game) {
+//    private boolean gameOver;
+
+    public SnakeGame(Game game, Player player, Tab tab) {
         this.game = game;
+        this.player = player;
+        this.tab = tab;
+//        this.gameOver = game.isGameOver();
         this.boardWidth = game.getBoardWidth();
         this.boardHeight = game.getBoardHeight();
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
@@ -44,7 +51,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         food = new Position(10, 10);
         random = new Random();
-        placeFood();
+        game.placeFood(food, random, boardWidth, boardHeight, tileSize);
 
         velocityX = game.getSnake().getDx();
         velocityY = game.getSnake().getDy();
@@ -85,17 +92,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         //Score
         g.setFont(new Font("Arial", Font.PLAIN, 16));
         g.setColor(Color.white);
-        if (gameOver) {
+        if (game.isGameOver()) {
             g.setColor(Color.red);
             g.drawString("Game Over! Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
         } else {
             g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
         }
-    }
-
-    public void placeFood() {
-        food.setPosX(random.nextInt(boardWidth / tileSize));
-        food.setPosY(random.nextInt(boardHeight / tileSize));
     }
 
     public void move() {
@@ -105,7 +107,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 || snakeHead.getPosX() * tileSize > boardWidth //passed left border or right border
                 || snakeHead.getPosY() * tileSize < 0
                 || snakeHead.getPosY() * tileSize > boardHeight) { //passed top border or bottom border
-            gameOver = true;
+            game.setGameOver(true);
         }
     }
 
@@ -117,7 +119,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) { //called every x milliseconds by gameLoop timer
         move();
         repaint();
-        if (gameOver) {
+        if (game.isGameOver()) {
+            game.setScore();
+            player.addScore(game.getScore());
+            tab.savePlayerBase();
             gameLoop.stop();
         }
     }
@@ -125,8 +130,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         game.getSnake().turn(e);
-        velocityX = game.getSnake().getDx();
-        velocityY = game.getSnake().getDy();
     }
 
     //not needed

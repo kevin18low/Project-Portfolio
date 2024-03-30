@@ -9,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 // Represents all tabs that are a part of the main panel
 public abstract class Tab extends JPanel {
@@ -47,7 +45,7 @@ public abstract class Tab extends JPanel {
     // Credit: JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads PlayerBase from file
-    protected void loadPlayerBase()  {
+    public void loadPlayerBase()  {
         try {
             pb = jsonReader.read();
             System.out.println("Loaded PlayerBase from " + JSON_STORE + "\n");
@@ -58,7 +56,7 @@ public abstract class Tab extends JPanel {
 
     // Credit: JsonSerializationDemo
     // EFFECTS: saves the PlayerBase to file
-    protected void savePlayerBase() {
+    public void savePlayerBase() {
         try {
             jsonWriter.open();
             jsonWriter.write(pb);

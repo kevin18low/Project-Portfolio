@@ -5,25 +5,28 @@
             "y": 3
         },
         "Score": 0,
-        "Length": 1,
-        "Color": "pink",
+        "Length": 0,
+        "Color": "blue",
         "Scores": [
             0,
             0,
             0,
             0,
-            0,
-            0,
-            0,
-            0,
+            8,
             10,
-            20,
-            30
+            6,
+            6,
+            10,
+            8,
+            2,
+            2,
+            2,
+            1
         ],
         "X": 0,
         "Y": 0,
-        "Height": 50,
-        "Width": 50,
+        "Height": 30,
+        "Width": 30,
         "Direction": 1,
         "Body": [],
         "Name": "kevin"
@@ -34,9 +37,13 @@
             "y": 1
         },
         "Score": 0,
-        "Length": 1,
+        "Length": 0,
         "Color": "green",
         "Scores": [
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -53,54 +60,5 @@
         "Direction": 1,
         "Body": [],
         "Name": "jeff"
-    },
-    {
-        "Head": {
-            "x": 1,
-            "y": 1
-        },
-        "Score": 0,
-        "Length": 1,
-        "Color": "black",
-        "Scores": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
-        "X": 0,
-        "Y": 0,
-        "Height": 0,
-        "Width": 0,
-        "Direction": 1,
-        "Body": [],
-        "Name": "bob"
-    },
-    {
-        "Head": {
-            "x": 3,
-            "y": 3
-        },
-        "Score": 0,
-        "Length": 1,
-        "Color": "pink",
-        "Scores": [
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
-        "X": 0,
-        "Y": 0,
-        "Height": 80,
-        "Width": 30,
-        "Direction": 1,
-        "Body": [],
-        "Name": "joe"
     }
 ]}

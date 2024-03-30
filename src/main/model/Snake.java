@@ -13,7 +13,6 @@ import static java.lang.Math.abs;
 
 public class Snake {
     private Direction direction;
-    private int snakeLength;
     private Position head;
     private ArrayList<Position> body;
     private int snakeX;
@@ -23,7 +22,7 @@ public class Snake {
     // Make a snake object going in given direction at position (x, y) with length and colour c
     public Snake(Direction direction, int x, int y, int length, String c) {
         this.direction = direction;
-        this.snakeLength = length;
+//        this.snakeLength = length;
         this.head = new Position(x, y);
         this.body = new ArrayList<>();
         this.color = c;
@@ -32,7 +31,7 @@ public class Snake {
     // Constructor for saving snake in progress
     public Snake(Direction direction, Position head, ArrayList<Position> body, int length, String c) {
         this.direction = direction;
-        this.snakeLength = length;
+//        this.snakeLength = length;
         this.head = head;
         this.body = body;
         this.color = c;
@@ -89,24 +88,12 @@ public class Snake {
         return direction.getDy();
     }
 
-    public void setSnakeLength(int snakeLength) {
-        this.snakeLength = snakeLength;
-    }
-
-    public void setSnakeX(int snakeX) {
-        this.snakeX = snakeX;
-    }
-
-    public void setSnakeY(int snakeY) {
-        this.snakeY = snakeY;
-    }
-
     public void setColor(String color) {
         this.color = color;
     }
 
     public int getSnakeLength() {
-        return snakeLength;
+        return body.size();
     }
 
     public int getSnakeX() {
