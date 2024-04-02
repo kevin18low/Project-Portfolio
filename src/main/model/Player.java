@@ -21,7 +21,7 @@ public class Player implements Writable {
     public Player(String name) {
         this.name = name;
         this.scores = new ArrayList<>();
-        game = new Game("black", 25);
+        game = new Game("green", 25);
     }
 
     // MODIFIES: this

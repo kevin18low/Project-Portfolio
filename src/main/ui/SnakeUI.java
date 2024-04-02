@@ -1,14 +1,18 @@
 package ui;
 
 import model.*;
+import model.Event;
 import ui.tabs.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 // Credit: SmartHome
 // Represents a SnakeUI class that runs the snake program
-public class SnakeUI extends JFrame {
+public class SnakeUI extends JFrame implements WindowListener {
     public static final int GAME_TAB_INDEX = 0;
     public static final int PLAYER_TAB_INDEX = 1;
 
@@ -29,6 +33,7 @@ public class SnakeUI extends JFrame {
 
         loadTabs();
         add(sidebar);
+        addWindowListener(this);
 
         setVisible(true);
     }
@@ -52,5 +57,44 @@ public class SnakeUI extends JFrame {
 
     public Game getGame() {
         return this.game;
+    }
+
+    public void printLog(EventLog el) {
+        for (Event e : el) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLog(EventLog.getInstance());
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

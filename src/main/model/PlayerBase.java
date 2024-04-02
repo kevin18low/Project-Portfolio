@@ -41,6 +41,7 @@ public class PlayerBase implements Writable {
     // EFFECTS: removes player from playerbase
     public void removePlayer(Player p) {
         players.remove(p);
+        EventLog.getInstance().logEvent(new Event("Player " + p.getName() + " removed from player base"));
     }
 
     // MODIFIES: this
@@ -52,6 +53,7 @@ public class PlayerBase implements Writable {
                 return p1.getName().compareTo(p2.getName());
             }
         });
+        EventLog.getInstance().logEvent(new Event("Players sorted alphabetically"));
     }
 
     // EFFECTS: put in JSON

@@ -1,6 +1,7 @@
 package ui.tabs;
 
 import model.*;
+import model.Event;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ui.*;
@@ -10,15 +11,16 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 // Represents the game tab that holds all info related to the game and game setup
-public class GameTab extends Tab implements ActionListener {
+public class GameTab extends Tab implements ActionListener, WindowListener {
 
     private static final String INIT_GAME = "Welcome to Snake!";
-    private JLabel gameIntro;
     private JButton newPlayer = new JButton("New Player");
     private JButton returning = new JButton("Returning Player");
     private JButton players = new JButton("Player List");
@@ -66,7 +68,7 @@ public class GameTab extends Tab implements ActionListener {
     private JPanel createIntroPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        gameIntro = new JLabel(INIT_GAME, JLabel.CENTER);
+        JLabel gameIntro = new JLabel(INIT_GAME, JLabel.CENTER);
         gameIntro.setBounds(150, 0, 200, 100);
         panel.add(gameIntro);
         JPanel buttonRow = formatButtonRow(begin);
@@ -174,6 +176,7 @@ public class GameTab extends Tab implements ActionListener {
         frame.add(save);
         SnakeGame snakeGame = new SnakeGame(playerGame, player, this);
         frame.add(snakeGame);
+        frame.addWindowListener(this);
         frame.pack();
 
         snakeGame.requestFocus();
@@ -431,5 +434,44 @@ public class GameTab extends Tab implements ActionListener {
     private void addPlayer(String name) {
         pb.addPlayer(new Player(name));
         displayNewProfile(pb.getPlayerProfile(name));
+    }
+
+    public void printLog(EventLog el) {
+        for (Event e : el) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLog(EventLog.getInstance());
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

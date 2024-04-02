@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import ui.tabs.Tab;
 
 import java.awt.*;
@@ -13,8 +14,8 @@ import javax.swing.*;
 // Runs a game of snake
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
-    private int boardWidth = 600;
-    private int boardHeight = boardWidth;
+    private static final int boardWidth = 600;
+    private static final int boardHeight = boardWidth;
     private int tileSize;
 
     private Position snakeHead;

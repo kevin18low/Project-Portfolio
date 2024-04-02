@@ -75,3 +75,5 @@ game and also make some customizations to make it more interesting.
 - If you continue to play after saving, you can pause at any time and close the window. Your old saved game will
 - still be there.
 - Note: at any point, if you lose the game, the game will end and your save file will be reset to a default game.
+
+**Phase 4: Task 2**

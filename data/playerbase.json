@@ -1,90 +1,12 @@
 {"Players": [
     {
         "Head": {
-            "x": 7,
-            "y": 15
-        },
-        "Score": 5,
-        "Color": "green",
-        "Tile Size": 25,
-        "Scores": [
-            10,
-            10,
-            4,
-            4,
-            0
-        ],
-        "Height": 600,
-        "Width": 600,
-        "Direction": 2,
-        "Body": [
-            {
-                "x": 7,
-                "y": 14
-            },
-            {
-                "x": 7,
-                "y": 13
-            },
-            {
-                "x": 7,
-                "y": 12
-            },
-            {
-                "x": 7,
-                "y": 11
-            },
-            {
-                "x": 7,
-                "y": 10
-            }
-        ],
-        "Name": "kevin",
-        "Food": {
-            "x": 5,
-            "y": 6
-        }
-    },
-    {
-        "Head": {
-            "x": 3,
-            "y": 4
-        },
-        "Score": 3,
-        "Color": "blue",
-        "Tile Size": 25,
-        "Scores": [1],
-        "Height": 600,
-        "Width": 600,
-        "Direction": -1,
-        "Body": [
-            {
-                "x": 4,
-                "y": 4
-            },
-            {
-                "x": 5,
-                "y": 4
-            },
-            {
-                "x": 6,
-                "y": 4
-            }
-        ],
-        "Name": "joe",
-        "Food": {
-            "x": 9,
-            "y": 6
-        }
-    },
-    {
-        "Head": {
             "x": 3,
             "y": 3
         },
         "Score": 0,
-        "Color": "pink",
-        "Tile Size": 30,
+        "Color": "green",
+        "Tile Size": 25,
         "Scores": [2],
         "Height": 600,
         "Width": 600,
@@ -98,21 +20,40 @@
     },
     {
         "Head": {
-            "x": 3,
-            "y": 3
+            "x": 15,
+            "y": 19
         },
-        "Score": 0,
-        "Color": "green",
-        "Tile Size": 25,
-        "Scores": [4],
+        "Score": 3,
+        "Color": "blue",
+        "Tile Size": 20,
+        "Scores": [
+            10,
+            10,
+            8,
+            4,
+            4
+        ],
         "Height": 600,
         "Width": 600,
-        "Direction": 1,
-        "Body": [],
-        "Name": "bob",
+        "Direction": 2,
+        "Body": [
+            {
+                "x": 15,
+                "y": 18
+            },
+            {
+                "x": 15,
+                "y": 17
+            },
+            {
+                "x": 15,
+                "y": 16
+            }
+        ],
+        "Name": "kevin",
         "Food": {
-            "x": 10,
-            "y": 10
+            "x": 6,
+            "y": 3
         }
     }
 ]}
