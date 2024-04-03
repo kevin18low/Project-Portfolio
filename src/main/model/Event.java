@@ -5,7 +5,7 @@ import java.util.Date;
 
 // Credit: AlarmSystem
 /**
- * Represents an system event.
+ * Represents a system event.
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;

@@ -7,12 +7,31 @@
         "Score": 0,
         "Color": "green",
         "Tile Size": 25,
+        "Scores": [4],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "bob",
+        "Food": {
+            "x": 10,
+            "y": 10
+        }
+    },
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Color": "green",
+        "Tile Size": 25,
         "Scores": [2],
         "Height": 600,
         "Width": 600,
         "Direction": 1,
         "Body": [],
-        "Name": "jeff",
+        "Name": "jake",
         "Food": {
             "x": 10,
             "y": 10
@@ -54,6 +73,25 @@
         "Food": {
             "x": 6,
             "y": 3
+        }
+    },
+    {
+        "Head": {
+            "x": 3,
+            "y": 3
+        },
+        "Score": 0,
+        "Color": "green",
+        "Tile Size": 25,
+        "Scores": [4],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "tom",
+        "Food": {
+            "x": 10,
+            "y": 10
         }
     }
 ]}

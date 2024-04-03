@@ -77,3 +77,4 @@ game and also make some customizations to make it more interesting.
 - Note: at any point, if you lose the game, the game will end and your save file will be reset to a default game.
 
 **Phase 4: Task 2**
+![Phase4eventlog](Phase4eventlog.png)

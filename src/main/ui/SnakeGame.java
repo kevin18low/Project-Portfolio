@@ -1,7 +1,6 @@
 package ui;
 
 import model.*;
-import model.Event;
 import ui.tabs.Tab;
 
 import java.awt.*;

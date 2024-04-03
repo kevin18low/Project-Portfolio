@@ -436,6 +436,7 @@ public class GameTab extends Tab implements ActionListener, WindowListener {
         displayNewProfile(pb.getPlayerProfile(name));
     }
 
+    // EFFECTS: prints log of events that occurred during program run
     public void printLog(EventLog el) {
         for (Event e : el) {
             System.out.println(e);
@@ -446,6 +447,7 @@ public class GameTab extends Tab implements ActionListener, WindowListener {
     public void windowOpened(WindowEvent e) {
     }
 
+    // EFFECTS: prints event log when window closes
     @Override
     public void windowClosing(WindowEvent e) {
         printLog(EventLog.getInstance());

@@ -71,9 +71,6 @@ public class JsonReader {
     // MODIFIES: p
     // EFFECTS: adds a game to the player's profile to be saved
     public void addGame(JSONObject jsonObject, Player p) {
-        int width = jsonObject.getInt("Width");
-        int height = jsonObject.getInt("Height");
-
         String c = jsonObject.getString("Color");
 
         int d = jsonObject.getInt("Direction");

@@ -5,8 +5,6 @@ import model.Event;
 import ui.tabs.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -19,7 +17,6 @@ public class SnakeUI extends JFrame implements WindowListener {
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;
     private JTabbedPane sidebar;
-    private Game game;
 
     // EFFECTS: create a new instance of the snake game
     public SnakeUI() {
@@ -53,10 +50,6 @@ public class SnakeUI extends JFrame implements WindowListener {
     //EFFECTS: returns sidebar of this UI
     public JTabbedPane getTabbedPane() {
         return sidebar;
-    }
-
-    public Game getGame() {
-        return this.game;
     }
 
     public void printLog(EventLog el) {
