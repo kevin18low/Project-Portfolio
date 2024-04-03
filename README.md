@@ -78,3 +78,14 @@ game and also make some customizations to make it more interesting.
 
 **Phase 4: Task 2**
 ![Phase4eventlog](Phase4eventlog.png)
+
+**Phase 4: Task 3**
+![UML_Design_Diagram](UML_Design_Diagram.png)
+
+In my program, many of my classes have lots of fields. This was pretty troublesome during the project, as they were
+hard to keep track of and often when I made changes they were left unused, and sometimes I forgot to delete them.
+One thing I would do is try to make some of those fields into local variables, or pass them as parameters into methods
+that I need them for. Another thing I would do is implement the Singleton pattern for my playerbase. There is only ever
+one playerbase, and every player added to it must be unique to play the game. The singleton pattern would help to make
+my code easier to use. One last thing is that maybe I could try to move some methods to other classes. Some of my
+classese got really long and filled with methods, so exporting them would help with ease of use.
