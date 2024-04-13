@@ -1,48 +1,10 @@
 {"Players": [
     {
         "Head": {
-            "x": 3,
-            "y": 3
+            "x": 11,
+            "y": 20
         },
-        "Score": 0,
-        "Color": "green",
-        "Tile Size": 25,
-        "Scores": [4],
-        "Height": 600,
-        "Width": 600,
-        "Direction": 1,
-        "Body": [],
-        "Name": "bob",
-        "Food": {
-            "x": 10,
-            "y": 10
-        }
-    },
-    {
-        "Head": {
-            "x": 3,
-            "y": 3
-        },
-        "Score": 0,
-        "Color": "green",
-        "Tile Size": 25,
-        "Scores": [2],
-        "Height": 600,
-        "Width": 600,
-        "Direction": 1,
-        "Body": [],
-        "Name": "jake",
-        "Food": {
-            "x": 10,
-            "y": 10
-        }
-    },
-    {
-        "Head": {
-            "x": 15,
-            "y": 19
-        },
-        "Score": 3,
+        "Score": 7,
         "Color": "blue",
         "Tile Size": 20,
         "Scores": [
@@ -54,25 +16,63 @@
         ],
         "Height": 600,
         "Width": 600,
-        "Direction": 2,
+        "Direction": 1,
         "Body": [
             {
-                "x": 15,
-                "y": 18
+                "x": 10,
+                "y": 20
             },
             {
-                "x": 15,
-                "y": 17
+                "x": 9,
+                "y": 20
             },
             {
-                "x": 15,
-                "y": 16
+                "x": 8,
+                "y": 20
+            },
+            {
+                "x": 7,
+                "y": 20
+            },
+            {
+                "x": 6,
+                "y": 20
+            },
+            {
+                "x": 5,
+                "y": 20
+            },
+            {
+                "x": 4,
+                "y": 20
             }
         ],
         "Name": "kevin",
         "Food": {
-            "x": 6,
+            "x": 25,
+            "y": 21
+        }
+    },
+    {
+        "Head": {
+            "x": 3,
             "y": 3
+        },
+        "Score": 0,
+        "Color": "green",
+        "Tile Size": 25,
+        "Scores": [
+            5,
+            3
+        ],
+        "Height": 600,
+        "Width": 600,
+        "Direction": 1,
+        "Body": [],
+        "Name": "renata",
+        "Food": {
+            "x": 10,
+            "y": 10
         }
     },
     {

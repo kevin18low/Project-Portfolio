@@ -343,6 +343,7 @@ public class GameTab extends Tab implements ActionListener, WindowListener {
 
     // MODIFIES: profilePanel, pb
     // EFFECTS: processes user input
+    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
     public void processInput(boolean isNew) {
         if (!isNew) {
             try {
@@ -357,7 +358,9 @@ public class GameTab extends Tab implements ActionListener, WindowListener {
                 addPlayer(name);
                 savePlayerBase();
             } else {
-                System.out.println("name in use");
+                Label usedPlayer = new Label("Your name has already been used.");
+                usedPlayer.setBounds(10, 120,  300, 30);
+                profilePanel.add(usedPlayer);
                 userName.setText(null);
                 return;
             }
