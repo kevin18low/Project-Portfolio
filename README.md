@@ -21,16 +21,6 @@ because I could never comprehend how someone could program games that seem
 so complex, so I'm hoping to be able to make a working version of this classic
 game and also make some customizations to make it more interesting.
 
-**User stories**
-
-**Phase 1**
-- As a user, I want to be able to create a new player profile and add it to a list of all players
-- As a user, I want to be able to see a list of my high scores
-- As a user, I want to be able to pause the game so I can take a break and come back later
-- As a user, I want to customize my snake's colour scheme
-- As a user, I want to choose the size of the board tiles
-
-**Phase 2**
 - As a user, I want to have the choice to save my game so I can play again another time
 - As a user, I want to have the choice to load a saved game or start a new one
 
@@ -42,7 +32,7 @@ game and also make some customizations to make it more interesting.
 - Oracle Swing tutorials
 - YouTube: KennyYipCoding
 
-**Instructions for grader**
+**Instructions for use**
 - Run main
 - Pressing 'player list' will bring you to the tab of players (X) in the playerbase (Y). This can also
 - be done by clicking on the 'players' tab on the left.
@@ -76,10 +66,10 @@ game and also make some customizations to make it more interesting.
 - still be there.
 - Note: at any point, if you lose the game, the game will end and your save file will be reset to a default game.
 
-**Phase 4: Task 2**
-![Phase4eventlog](Phase4eventlog.png)
+**Event Log**
+![Phase4eventlog](EventLog.png)
 
-**Phase 4: Task 3**
+**UML Diagram**
 ![UML_Design_Diagram](UML_Design_Diagram.png)
 
 In my program, many of my classes have lots of fields. This was pretty troublesome during the project, as they were
